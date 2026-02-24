@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elite Electric Services | Licensed Electrician | 20 Years Experience</title>
+    <meta name="description" content="Professional licensed electrician with 20 years of experience serving residential and commercial clients. 24/7 emergency services available.">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    },
+                    colors: {
+                        primary: {
+                            900: '#0f172a', // Dark blue/slate
+                            800: '#1e293b',
+                            700: '#334155',
+                        },
+                        accent: {
+                            500: '#f59e0b', // Amber/Electric yellow
+                            400: '#fbbf24',
+                            300: '#fcd34d',
+                        }
+                    },
+                    animation: {
+                        'fade-in-up': 'fadeInUp 0.8s ease-out forwards',
+                        'slide-in-right': 'slideInRight 0.6s ease-out forwards',
+                    },
+                    keyframes: {
+                        fadeInUp: {
+                            '0%': { opacity: '0', transform: 'translateY(30px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        slideInRight: {
+                            '0%': { opacity: '0', transform: 'translateX(50px)' },
+                            '100%': { opacity: '1', transform: 'translateX(0)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+        
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .hover-lift {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .hover-lift:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+        
+        .gradient-overlay {
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(30, 41, 59, 0.8) 100%);
+        }
+        
+        .electric-accent {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .electric-accent::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, #f59e0b, #fbbf24, #f59e0b);
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+        }
+        
+        .electric-accent:hover::after {
+            transform: translateX(0);
+        }
+    </style>
+</head>
+<body class="font-sans text-slate-700 bg-slate-50 antialiased">
+
+    <!-- Navigation -->
+    <nav id="navbar" class="fixed w-full z-50 transition-all duration-300 bg-white/95 backdrop-blur-md shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <!-- Logo -->
+                <div class="flex items-center space-x-3">
+                    <div class="bg-primary-900 p-2 rounded-lg">
+                        <i data-lucide="zap" class="w-6 h-6 text-accent-400"></i>
+                    </div>
+                    <div>
+                        <span class="font-serif text-xl font-bold text-primary-900">Elite Electric</span>
+                        <p class="text-xs text-slate-500 font-medium tracking-wider">LICENSED & INSURED</p>
+                    </div>
+                </div>
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#services" class="text-slate-600 hover:text-primary-900 font-medium transition-colors electric-accent pb-1">Services</a>
+                    <a href="#about" class="text-slate-600 hover:text-primary-900 font-medium transition-colors electric-accent pb-1">About</a>
+                    <a href="#testimonials" class="text-slate-600 hover:text-primary-900 font-medium transition-colors electric-accent pb-1">Testimonials</a>
+                    <a href="/port.html" class="text-slate-600 hover:text-primary-900 font-medium transition-colors electric-accent pb-1">protfolio</a>
+                    <a href="#contact" class="bg-primary-900 text-white px-6 py-3 rounded-full font-semibold hover:bg-accent-500 transition-all duration-300 flex items-center gap-2 group">
+                        <i data-lucide="phone" class="w-4 h-4 group-hover:animate-pulse"></i>
+                        <span>Get a Quote</span>
+                    </a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button id="mobile-menu-btn" class="md:hidden p-2 rounded-lg hover:bg-slate-100 transition-colors">
+                    <i data-lucide="menu" class="w-6 h-6 text-primary-900"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-slate-100 absolute w-full shadow-lg">
+            <div class="px-4 py-6 space-y-4">
+                <a href="#services" class="block text-slate-600 hover:text-primary-900 font-medium py-2">Services</a>
+                <a href="#about" class="block text-slate-600 hover:text-primary-900 font-medium py-2">About</a>
+                <a href="#testimonials" class="block text-slate-600 hover:text-primary-900 font-medium py-2">Testimonials</a>
+                <a href="#contact" class="block bg-primary-900 text-white px-6 py-3 rounded-full font-semibold text-center mt-4">Get a Quote</a>
+            </div>
+        </div>
+    </nav>
+    <!-- Emergency Banner -->
+    <div class="bg-accent-500 py-4 px-4 relative overflow-hidden sticky top-20 z-40">
+        <div class="absolute inset-0 bg-gradient-to-r from-accent-500 via-accent-400 to-accent-500 animate-pulse"></div>
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-center gap-4 relative z-10">
+            <div class="flex items-center gap-3 text-primary-900 font-bold">
+                <i data-lucide="alert-triangle" class="w-6 h-6 animate-pulse"></i>
+                <span class="text-lg">24/7 EMERGENCY ELECTRICAL SERVICES AVAILABLE</span>
+            </div>
+            <a href="tel:+1234567890" class="bg-primary-900 text-white px-6 py-2 rounded-full font-bold hover:bg-slate-800 transition-colors flex items-center gap-2">
+                <i data-lucide="phone" class="w-4 h-4"></i>
+                Call Now
+            </a>
+        </div>
+    </div>
+
+
+<!-- GALLERY GRID -->
+<div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
+
+    <!-- Project Card -->
+    <div class="project-card bg-white rounded-2xl overflow-hidden shadow-lg cursor-pointer"
+         onclick="openLightbox(0)">
+
+        <div class="relative overflow-hidden aspect-[4/3]">
+            <img src="http://static.photos/indoor/800x600/1"
+                 class="w-full h-full object-cover transition-transform duration-700">
+
+            <div class="absolute top-4 right-4 bg-white px-3 py-1 rounded-full">
+                <span class="text-xs font-semibold text-blue-600">Residential</span>
+            </div>
+        </div>
+
+        <div class="p-6">
+            <h3 class="text-xl font-bold mb-2">
+                Modern Home Complete Rewiring
+            </h3>
+            <p class="text-gray-600 text-sm">
+                Complete electrical system upgrade including smart panel and EV charging.
+            </p>
+        </div>
+    </div>
+
+</div>
+
+
+<!-- LIGHTBOX -->
+<div id="lightbox"
+     class="fixed inset-0 z-50 hidden lightbox bg-black/90">
+
+    <div class="absolute inset-0 flex items-center justify-center p-4">
+
+        <!-- Close Button -->
+        <button onclick="closeLightbox()"
+                class="absolute top-6 right-6 text-white">
+            <i data-lucide="x" class="w-8 h-8"></i>
+        </button>
+
+        <!-- Modal Content -->
+        <div class="bg-white rounded-2xl overflow-hidden max-w-5xl w-full shadow-2xl"
+             onclick="event.stopPropagation()">
+
+            <div class="grid md:grid-cols-2">
+
+                <!-- Image -->
+                <div class="relative h-64 md:h-auto">
+                    <img id="lightbox-img"
+                         class="w-full h-full object-cover">
+                    <div class="absolute top-4 left-4">
+                        <span id="lightbox-category"
+                              class="bg-white px-4 py-1 rounded-full text-sm font-semibold"></span>
+                    </div>
+                </div>
+
+                <!-- Info Panel -->
+                <div class="p-8">
+
+                    <div class="flex items-center gap-2 text-yellow-500 mb-4">
+                        <i data-lucide="star" class="w-5 h-5 fill-current"></i>
+                        <span id="lightbox-rating"
+                              class="font-bold text-gray-900"></span>
+                        <span class="text-gray-500 text-sm">Client Rating</span>
+                    </div>
+
+                    <h3 id="lightbox-title"
+                        class="text-2xl font-bold mb-4"></h3>
+
+                    <p id="lightbox-description"
+                       class="text-gray-600 mb-6"></p>
+
+                    <div class="flex items-center gap-3 text-gray-700 mb-6">
+                        <i data-lucide="map-pin" class="w-5 h-5 text-blue-600"></i>
+                        <span id="lightbox-location"></span>
+                    </div>
+
+                    <button class="w-full bg-blue-600 text-white py-3 rounded-xl font-semibold">
+                        Request Similar Project
+                    </button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+lucide.createIcons();
+
+/* PROJECT DATA */
+const projects = [
+{
+    title: "Modern Home Complete Rewiring",
+    category: "Residential",
+    categoryColor: "text-blue-600",
+    location: "Austin, TX",
+    rating: "5.0",
+    image: "http://static.photos/indoor/800x600/1",
+    description:
+    "Complete electrical system upgrade for a 4-bedroom modern home including smart panel and EV charging station."
+}
+];
+
+/* LIGHTBOX LOGIC */
+const lightbox = document.getElementById('lightbox');
+
+function openLightbox(index) {
+    const project = projects[index];
+
+    document.getElementById('lightbox-img').src = project.image;
+    document.getElementById('lightbox-title').textContent = project.title;
+    document.getElementById('lightbox-description').textContent = project.description;
+    document.getElementById('lightbox-location').textContent = project.location;
+    document.getElementById('lightbox-rating').textContent = project.rating;
+
+    const categoryEl = document.getElementById('lightbox-category');
+    categoryEl.textContent = project.category;
+    categoryEl.className =
+        `bg-white px-4 py-1 rounded-full text-sm font-semibold ${project.categoryColor}`;
+
+    lightbox.classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+
+    setTimeout(() => lucide.createIcons(), 50);
+}
+
+function closeLightbox() {
+    lightbox.classList.add('hidden');
+    document.body.style.overflow = 'auto';
+}
+
+document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeLightbox();
+});
+
+lightbox.addEventListener('click', e => {
+    if (e.target === lightbox) closeLightbox();
+});
+</script>
+
+</body>
+</html>

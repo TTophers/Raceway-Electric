@@ -1,0 +1,943 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Raceway Electric Services | Licensed Electrician | 20 Years Experience</title>
+    <meta name="description" content="Professional licensed electrician with 20 years of experience serving residential and commercial clients. 24/7 emergency services available.">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    },
+                    colors: {
+                        primary: {
+                            900: '#000000', // Pure black for brand match
+                            800: '#0a0a0a',
+                            700: '#171717',
+                        },
+                        accent: {
+                            500: '#0d0081', // Lightning yellow
+                            400: '#fe81fd',
+                            300: '#acc6fd',
+                            100: '#a00057'
+                        }
+                    },
+                    animation: {
+                        'fade-in-up': 'fadeInUp 0.8s ease-out forwards',
+                        'slide-in-right': 'slideInRight 0.6s ease-out forwards',
+                    },
+                    keyframes: {
+                        fadeInUp: {
+                            '0%': { opacity: '0', transform: 'translateY(30px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        slideInRight: {
+                            '0%': { opacity: '0', transform: 'translateX(50px)' },
+                            '100%': { opacity: '1', transform: 'translateX(0)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+        
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .hover-lift {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .hover-lift:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+        
+        .gradient-overlay {
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(30, 41, 59, 0.8) 100%);
+        }
+        
+        .electric-accent {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .electric-accent::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, #f59e0b, #fbbf24, #f59e0b);
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+        }
+        
+        .electric-accent:hover::after {
+            transform: translateX(0);
+        }
+    </style>
+</head>
+<body class="font-sans text-slate-200 bg-black antialiased">
+
+    <!-- Navigation -->
+    <nav id="navbar" class="fixed w-full z-50 transition-all duration-300 bg-black/90 backdrop-blur-md shadow-sm text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <!-- Logo -->
+                <div class="flex items-center space-x-3">
+              <div class="bg-primary-900 p-2 rounded-lg flex items-center justify-center">
+           <img src="pics/logo.jpg" alt="Raceway Electric Logo" class="h-16 md:h-24 w-auto object-contain">
+                    </div>
+                    <div>
+                        <span class="font-serif text-xl font-bold text-white">Raceway Electric</span>
+                        <p class="text-xs text-slate-400 font-medium tracking-wider">LICENSED & INSURED</p>
+                    </div>
+                </div>
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#services" class="text-slate-300 hover:text-white font-medium transition-colors electric-accent pb-1">Services</a>
+                    <a href="#about" class="text-slate-300 hover:text-white font-medium transition-colors electric-accent pb-1">About</a>
+                    <a href="#testimonials" class="text-slate-300 hover:text-white font-medium transition-colors electric-accent pb-1">Testimonials</a>
+                    <a href="/port.html" class="text-slate-300 hover:text-white font-medium transition-colors electric-accent pb-1">protfolio</a>
+                    <a href="#contact" class="bg-accent-500 text-white px-6 py-3 rounded-full font-semibold hover:bg-accent-500 transition-all duration-300 flex items-center gap-2 group">
+                        <i data-lucide="phone" class="w-4 h-4 group-hover:animate-pulse"></i>
+                        <span>Get a Quote</span>
+                    </a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button id="mobile-menu-btn" class="md:hidden p-2 rounded-lg hover:bg-slate-100 transition-colors">
+                    <i data-lucide="menu" class="w-6 h-6 text-white"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-slate-900 border-t border-slate-100 absolute w-full shadow-lg">
+            <div class="px-4 py-6 space-y-4">
+                <a href="#services" class="block text-slate-300 hover:text-white font-medium py-2">Services</a>
+                <a href="#about" class="block text-slate-300 hover:text-white font-medium py-2">About</a>
+                <a href="#testimonials" class="block text-slate-300 hover:text-white font-medium py-2">Testimonials</a>
+                <a href="#contact" class="block bg-primary-500 text-white px-6 py-3 rounded-full font-semibold text-center mt-4">Get a Quote</a>
+            </div>
+        </div>
+    </nav>
+    <!-- Emergency Banner -->
+    <div class="bg-accent-500 py-4 px-4 relative overflow-hidden sticky top-20 z-40">
+        <div class="absolute inset-0 bg-gradient-to-r from-accent-500 via-accent-400 to-accent-500 animate-pulse"></div>
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-center gap-4 relative z-10">
+            <div class="flex items-center gap-3 text-white font-bold">
+                <i data-lucide="alert-triangle" class="w-6 h-6 animate-pulse"></i>
+                <span class="text-lg">24/7 EMERGENCY ELECTRICAL SERVICES AVAILABLE</span>
+            </div>
+            <a href="tel:+1234567890" class="bg-accent-500 text-white px-6 py-2 rounded-full font-bold hover:bg-slate-800 transition-colors flex items-center gap-2">
+                <i data-lucide="phone" class="w-4 h-4"></i>
+                Call Now
+            </a>
+        </div>
+    </div>
+    <!-- Hero Section -->
+    <section class="relative min-h-screen flex items-center pt-20 overflow-hidden">
+        <!-- Background Image -->
+        <div class="absolute inset-0 z-0">
+            <img src="https://static.photos/industrial/1200x630/42" alt="Electrician at work" class="w-full h-full object-cover">
+            <div class="absolute inset-0 gradient-overlay"></div>
+        </div>
+
+        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <div class="space-y-8 animate-fade-in-up">
+                    <!-- Badge -->
+                    <div class="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-4 py-2 text-white">
+                        <i data-lucide="shield-check" class="w-5 h-5 text-accent-400"></i>
+                        <span class="text-sm font-semibold tracking-wide">20 YEARS OF EXCELLENCE</span>
+                    </div>
+
+                    <h1 class="font-serif text-5xl md:text-6xl lg:text-7xl font-bold text-white leading-tight">
+                        Powering Your <br>
+                        <span class="text-accent-400 italic">Peace of Mind</span>
+                    </h1>
+
+                    <p class="text-lg md:text-xl text-slate-300 max-w-xl leading-relaxed">
+                        Licensed master electrician serving residential and commercial clients with integrity, precision, and 24/7 emergency availability. Your safety is our priority.
+                    </p>
+
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <a href="#contact" class="bg-accent-300 text-primary-900 px-8 py-4 rounded-full font-bold text-lg hover:bg-accent-400 transition-all duration-300 flex items-center justify-center gap-2 group shadow-lg hover:shadow-accent-500/30">
+                            <span>Schedule Service</span>
+                            <i data-lucide="arrow-right" class="w-5 h-5 group-hover:translate-x-1 transition-transform"></i>
+                        </a>
+                        <a href="tel:+1234567890" class="border-2 border-white/30 text-white px-8 py-4 rounded-full font-semibold hover:bg-white/10 transition-all duration-300 flex items-center justify-center gap-2 backdrop-blur-sm">
+                            <i data-lucide="phone" class="w-5 h-5"></i>
+                            <span>(123) 456-7890</span>
+                        </a>
+                    </div>
+
+                    <!-- Trust Indicators -->
+                    <div class="flex flex-wrap gap-6 pt-8 border-t border-white/10">
+                        <div class="flex items-center gap-2 text-slate-300">
+                            <i data-lucide="badge-check" class="w-5 h-5 text-accent-400"></i>
+                            <span class="text-sm font-medium">Licensed & Insured</span>
+                        </div>
+                        <div class="flex items-center gap-2 text-slate-300">
+                            <i data-lucide="clock" class="w-5 h-5 text-accent-400"></i>
+                            <span class="text-sm font-medium">24/7 Emergency</span>
+                        </div>
+                        <div class="flex items-center gap-2 text-slate-300">
+                            <i data-lucide="star" class="w-5 h-5 text-accent-400"></i>
+                            <span class="text-sm font-medium">5-Star Rated</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Stats Card -->
+                <div class="hidden lg:block animate-slide-in-right">
+                    <div class="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-8 shadow-2xl">
+                        <div class="grid grid-cols-2 gap-6">
+                            <div class="text-center p-4 border-r border-white/10">
+                                <div class="text-4xl font-bold text-accent-400 mb-1">30+</div>
+                                <div class="text-sm text-slate-300 font-medium">Years Experience</div>
+                            </div>
+                            <div class="text-center p-4">
+                                <div class="text-4xl font-bold text-accent-400 mb-1">5K+</div>
+                                <div class="text-sm text-slate-300 font-medium">Projects Completed</div>
+                            </div>
+                            <div class="text-center p-4 border-r border-white/10 border-t border-white/10 pt-6">
+                                <div class="text-4xl font-bold text-accent-400 mb-1">24/7</div>
+                                <div class="text-sm text-slate-300 font-medium">Emergency Service</div>
+                            </div>
+                            <div class="text-center p-4 border-t border-white/10 pt-6">
+                                <div class="text-4xl font-bold text-accent-400 mb-1">100%</div>
+                                <div class="text-sm text-slate-300 font-medium">Satisfaction</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scroll Indicator -->
+        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+            <i data-lucide="chevron-down" class="w-6 h-6 text-white/50"></i>
+        </div>
+    </section>
+
+
+
+    <!-- Services Section -->
+    <section id="services" class="py-24 bg-black">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16 reveal">
+                <span class="text-accent-300 font-bold tracking-wider text-sm uppercase">Our Services</span>
+                <h2 class="font-serif text-4xl md:text-5xl font-bold text-white mt-4 mb-6">Comprehensive Electrical Solutions</h2>
+                <p class="text-slate-300 text-lg">From minor repairs to major installations, we deliver expert electrical services tailored to your specific needs with precision and care.</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Residential -->
+                <div class="group bg-slate-900 rounded-2xl p-8 hover-lift border border-slate-100 reveal">
+                    <div class="w-14 h-14 bg-primary-900 rounded-xl flex items-center justify-center mb-6 group-hover:bg-accent-500 transition-colors duration-300">
+                        <i data-lucide="home" class="w-7 h-7 text-white group-hover:text-primary-900 transition-colors"></i>
+                    </div>
+                    <h3 class="font-serif text-2xl font-bold text-white mb-3">Residential</h3>
+                    <p class="text-slate-300 mb-6 leading-relaxed">Complete home electrical services including panel upgrades, lighting installation, rewiring, and smart home integration.</p>
+                    <ul class="space-y-2 mb-6 text-sm text-slate-300">
+                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-accent-500"></i> Electrical Panel Upgrades</li>
+                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-accent-500"></i> Indoor & Outdoor Lighting</li>
+                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-accent-500"></i> Ceiling Fan Installation</li>
+                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-accent-500"></i> EV Charger Installation</li>
+                    </ul>
+                    <a href="#contact" class="text-white font-semibold flex items-center gap-2 group-hover:text-accent-500 transition-colors">
+                        Learn More <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    </a>
+                </div>
+
+                <!-- Commercial -->
+                <div class="group bg-slate-900 rounded-2xl p-8 hover-lift border border-slate-100 reveal">
+                    <div class="w-14 h-14 bg-primary-900 rounded-xl flex items-center justify-center mb-6 group-hover:bg-accent-500 transition-colors duration-300">
+                        <i data-lucide="building-2" class="w-7 h-7 text-white group-hover:text-primary-900 transition-colors"></i>
+                    </div>
+                    <h3 class="font-serif text-2xl font-bold text-white mb-3">Commercial</h3>
+                    <p class="text-slate-300 mb-6 leading-relaxed">Powering businesses with reliable electrical systems, from new construction to maintenance and energy-efficient upgrades.</p>
+                    <ul class="space-y-2 mb-6 text-sm text-slate-300">
+                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-accent-500"></i> New Construction Wiring</li>
+                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-accent-500"></i> LED Retrofitting</li>
+                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-accent-500"></i> Backup Generators</li>
+                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-accent-500"></i> Code Compliance Updates</li>
+                    </ul>
+                    <a href="#contact" class="text-white font-semibold flex items-center gap-2 group-hover:text-accent-500 transition-colors">
+                        Learn More <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    </a>
+                </div>
+
+                <!-- Emergency -->
+                <div class="group bg-slate-900 rounded-2xl p-8 hover-lift border border-slate-100 reveal">
+                    <div class="w-14 h-14 bg-primary-900 rounded-xl flex items-center justify-center mb-6 group-hover:bg-accent-500 transition-colors duration-300">
+                        <i data-lucide="battery-charging" class="w-7 h-7 text-white group-hover:text-primary-900 transition-colors"></i>
+                    </div>
+                    <h3 class="font-serif text-2xl font-bold text-white mb-3">Emergency Repairs</h3>
+                    <p class="text-slate-300 mb-6 leading-relaxed">Rapid response to electrical emergencies. Available 24/7 for power outages, electrical fires, and hazardous situations.</p>
+                    <ul class="space-y-2 mb-6 text-sm text-slate-300">
+                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-accent-500"></i> 24/7 Rapid Response</li>
+                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-accent-500"></i> Power Outage Solutions</li>
+                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-accent-500"></i> Circuit Breaker Issues</li>
+                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-accent-500"></i> Safety Inspections</li>
+                    </ul>
+                    <a href="#contact" class="text-white font-semibold flex items-center gap-2 group-hover:text-accent-500 transition-colors">
+                        Learn More <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+<!-- Portfolio Preview Section -->
+<section class="py-16 bg-black">
+  <div class="max-w-6xl mx-auto px-6">
+
+    <!-- Section Header -->
+    <div class="flex items-end justify-between mb-8">
+      <div>
+        <h2 class="text-3xl font-bold text-white">
+          Recent Projects
+        </h2>
+        <p class="text-slate-300 mt-2">
+          A quick look at some of our latest work
+        </p>
+      </div>
+
+      <!-- View Full Portfolio Button -->
+      <a href="port.html"
+         class="hidden md:inline-block bg-accent-100 text-white px-5 py-2 rounded-xl font-semibold hover:bg-text-accent-300 transition">
+         View Portfolio →
+      </a>
+    </div>
+
+    <!-- Small Card Grid -->
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
+
+      <!-- Card 1 -->
+      <a href="port.html"
+         class="group bg-slate-900 rounded-xl overflow-hidden shadow-md hover:shadow-xl transition duration-300">
+
+        <div class="relative overflow-hidden aspect-[4/3]">
+          <img src="http://static.photos/indoor/800x600/1"
+               class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+
+          <div class="absolute top-3 right-3 bg-slate-900 px-2 py-1 rounded-full">
+            <span class="text-[10px] font-semibold text-blue-600">
+              Residential
+            </span>
+          </div>
+        </div>
+
+        <div class="p-3">
+          <h3 class="text-sm font-bold text-white line-clamp-2">
+            Modern Home Rewiring
+          </h3>
+        </div>
+      </a>
+
+      <!-- Card 2 -->
+      <a href="port.html"
+         class="group bg-slate-900 rounded-xl overflow-hidden shadow-md hover:shadow-xl transition duration-300">
+
+        <div class="relative overflow-hidden aspect-[4/3]">
+          <img src="http://static.photos/indoor/800x600/2"
+               class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+
+          <div class="absolute top-3 right-3 bg-slate-900 px-2 py-1 rounded-full">
+            <span class="text-[10px] font-semibold text-green-600">
+              Commercial
+            </span>
+          </div>
+        </div>
+
+        <div class="p-3">
+          <h3 class="text-sm font-bold text-white line-clamp-2">
+            Office Electrical Upgrade
+          </h3>
+        </div>
+      </a>
+
+      <!-- Card 3 -->
+      <a href="port.html"
+         class="group bg-slate-900 rounded-xl overflow-hidden shadow-md hover:shadow-xl transition duration-300">
+
+        <div class="relative overflow-hidden aspect-[4/3]">
+          <img src="http://static.photos/indoor/800x600/3"
+               class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+
+          <div class="absolute top-3 right-3 bg-slate-900 px-2 py-1 rounded-full">
+            <span class="text-[10px] font-semibold text-purple-600">
+              Smart Install
+            </span>
+          </div>
+        </div>
+
+        <div class="p-3">
+          <h3 class="text-sm font-bold text-white line-clamp-2">
+            Smart Panel + EV Charger
+          </h3>
+        </div>
+      </a>
+
+      <!-- Card 4 -->
+      <a href="port.html"
+         class="group bg-slate-900 rounded-xl overflow-hidden shadow-md hover:shadow-xl transition duration-300">
+
+        <div class="relative overflow-hidden aspect-[4/3]">
+          <img src="http://static.photos/indoor/800x600/4"
+               class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+
+          <div class="absolute top-3 right-3 bg-slate-900 px-2 py-1 rounded-full">
+            <span class="text-[10px] font-semibold text-orange-600">
+              Lighting
+            </span>
+          </div>
+        </div>
+
+        <div class="p-3">
+          <h3 class="text-sm font-bold text-white line-clamp-2">
+            Custom Interior Lighting
+          </h3>
+        </div>
+      </a>
+
+    </div>
+
+    <!-- Mobile Button -->
+    <div class="mt-8 text-center md:hidden">
+      <a href="port.html"
+         class="inline-block bg-blue-600 text-white px-6 py-3 rounded-xl font-semibold hover:bg-blue-700 transition">
+         View Full Portfolio
+      </a>
+    </div>
+
+  </div>
+</section>
+
+
+
+
+
+
+    <!-- About Section --
+    <section id="about" class="py-24 bg-slate-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid lg:grid-cols-2 gap-16 items-center">
+                <!-- Image Side -
+                <div class="relative reveal">
+                    <div class="absolute -top-4 -left-4 w-24 h-24 bg-accent-400 rounded-full opacity-50 blur-2xl"></div>
+                    <div class="absolute -bottom-4 -right-4 w-32 h-32 bg-primary-900 rounded-full opacity-20 blur-3xl"></div>
+                    
+                    <div class="relative rounded-2xl overflow-hidden shadow-2xl">
+                        <img src="https://static.photos/technology/640x800/88" alt="Master Electrician" class="w-full h-auto object-cover">
+                        <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-primary-900 to-transparent p-8">
+                            <div class="flex items-center gap-4 text-white">
+                                <div class="bg-accent-500 p-3 rounded-full">
+                                    <i data-lucide="award" class="w-6 h-6 text-primary-900"></i>
+                                </div>
+                                <div>
+                                    <p class="font-bold text-lg">Master Electrician</p>
+                                    <p class="text-slate-300 text-sm">License #ELEC-2024-001</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+           
+                <!-- Content Side --
+                <div class="space-y-6 reveal">
+                    <span class="text-accent-500 font-bold tracking-wider text-sm uppercase">About Us</span>
+                    <h2 class="font-serif text-4xl md:text-5xl font-bold text-white leading-tight">
+                        Two Decades of <br>
+                        <span class="text-accent-500">Electrical Excellence</span>
+                    </h2>
+                    
+                    <p class="text-slate-300 text-lg leading-relaxed">
+                        With 20 years of hands-on experience in the electrical industry, I've built a reputation for reliability, safety, and exceptional craftsmanship. From humble beginnings as an apprentice to becoming a licensed master electrician, every project receives the same dedication to excellence.
+                    </p>
+                    
+                    <p class="text-slate-300 leading-relaxed">
+                        We understand that inviting someone into your home or business requires trust. That's why we prioritize transparent communication, clean workmanship, and treating every property with respect. No shortcuts, no surprises—just honest, professional electrical service.
+                    </p>
+
+                    <div class="grid grid-cols-2 gap-6 pt-6">
+                        <div class="flex items-start gap-3">
+                            <div class="bg-accent-400/20 p-2 rounded-lg mt-1">
+                                <i data-lucide="shield-check" class="w-5 h-5 text-accent-500"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-white mb-1">Fully Licensed</h4>
+                                <p class="text-sm text-slate-300">State certified and continuously educated on latest codes</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <div class="bg-accent-400/20 p-2 rounded-lg mt-1">
+                                <i data-lucide="heart-handshake" class="w-5 h-5 text-accent-500"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-white mb-1">Integrity First</h4>
+                                <p class="text-sm text-slate-300">Honest pricing and recommendations that prioritize your safety</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pt-6">
+                        <img src="https://static.photos/office/200x80/55" alt="Signature" class="h-12 opacity-60">
+                        <p class="text-sm text-slate-400 mt-2 italic">"Your safety is my priority"</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Choose Us -->
+    <section class="py-24 bg-black">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid lg:grid-cols-3 gap-8">
+                <div class="lg:col-span-1 reveal">
+                    <span class="text-accent-300 font-bold tracking-wider text-sm uppercase">Why Choose Us</span>
+                    <h2 class="font-serif text-4xl font-bold text-white mt-4 mb-6">The Elite Difference</h2>
+                    <p class="text-slate-300 mb-8 leading-relaxed">
+                        We combine technical expertise with genuine care for our clients, ensuring every job is done right the first time.
+                    </p>
+                    <a href="#contact" class="inline-flex items-center gap-2 bg-primary-900 text-white px-8 py-4 rounded-full font-semibold hover:bg-accent-500 hover:text-primary-900 transition-all duration-300">
+                        Get Started Today
+                        <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                    </a>
+                </div>
+
+                <div class="lg:col-span-2 grid sm:grid-cols-2 gap-6">
+                    <div class="bg-slate-900 p-6 rounded-2xl border border-slate-100 reveal hover:border-accent-400 transition-colors duration-300">
+                        <div class="w-12 h-12 bg-accent-400/20 rounded-xl flex items-center justify-center mb-4">
+                            <i data-lucide="clock" class="w-6 h-6 text-accent-300"></i>
+                        </div>
+                        <h3 class="font-bold text-white text-xl mb-2">On-Time Guarantee</h3>
+                        <p class="text-slate-300 text-sm">We respect your time. If we're late, your service call is free.</p>
+                    </div>
+
+                    <div class="bg-slate-900 p-6 rounded-2xl border border-slate-100 reveal hover:border-accent-400 transition-colors duration-300">
+                        <div class="w-12 h-12 bg-accent-400/20 rounded-xl flex items-center justify-center mb-4">
+                            <i data-lucide="banknote" class="w-6 h-6 text-accent-300"></i>
+                        </div>
+                        <h3 class="font-bold text-white text-xl mb-2">Upfront Pricing</h3>
+                        <p class="text-slate-300 text-sm">No hidden fees or surprises. You'll know the exact cost before we begin.</p>
+                    </div>
+
+                    <div class="bg-slate-900 p-6 rounded-2xl border border-slate-100 reveal hover:border-accent-400 transition-colors duration-300">
+                        <div class="w-12 h-12 bg-accent-400/20 rounded-xl flex items-center justify-center mb-4">
+                            <i data-lucide="clipboard-check" class="w-6 h-6 text-accent-300"></i>
+                        </div>
+                        <h3 class="font-bold text-white text-xl mb-2">Code Compliant</h3>
+                        <p class="text-slate-300 text-sm">All work meets or exceeds local and national electrical codes.</p>
+                    </div>
+
+                    <div class="bg-slate-900 p-6 rounded-2xl border border-slate-100 reveal hover:border-accent-400 transition-colors duration-300">
+                        <div class="w-12 h-12 bg-accent-400/20 rounded-xl flex items-center justify-center mb-4">
+                            <i data-lucide="sparkles" class="w-6 h-6 text-accent-300"></i>
+                        </div>
+                        <h3 class="font-bold text-white text-xl mb-2">Clean Worksite</h3>
+                        <p class="text-slate-300 text-sm">We leave your property cleaner than we found it. Guaranteed.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section id="testimonials" class="py-24 bg-primary-900 relative overflow-hidden">
+        <div class="absolute top-0 left-0 w-full h-full overflow-hidden opacity-10">
+            <div class="absolute -top-24 -left-24 w-96 h-96 bg-accent-400 rounded-full blur-3xl"></div>
+            <div class="absolute -bottom-24 -right-24 w-96 h-96 bg-blue-500 rounded-full blur-3xl"></div>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center max-w-3xl mx-auto mb-16 reveal">
+                <span class="text-accent-400 font-bold tracking-wider text-sm uppercase">Testimonials</span>
+                <h2 class="font-serif text-4xl md:text-5xl font-bold text-white mt-4 mb-6">Trusted by Homeowners & Businesses</h2>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-8 reveal hover:bg-white/10 transition-colors duration-300">
+                    <div class="flex gap-1 mb-4">
+                        <i data-lucide="star" class="w-5 h-5 text-accent-400 fill-current"></i>
+                        <i data-lucide="star" class="w-5 h-5 text-accent-400 fill-current"></i>
+                        <i data-lucide="star" class="w-5 h-5 text-accent-400 fill-current"></i>
+                        <i data-lucide="star" class="w-5 h-5 text-accent-400 fill-current"></i>
+                        <i data-lucide="star" class="w-5 h-5 text-accent-400 fill-current"></i>
+                    </div>
+                    <p class="text-slate-300 mb-6 italic leading-relaxed">"Incredible service! They upgraded our entire home electrical panel in one day. Professional, clean, and explained everything clearly. Highly recommend for any residential work."</p>
+                    <div class="flex items-center gap-4">
+                        <img src="https://static.photos/people/80x80/12" alt="Customer" class="w-12 h-12 rounded-full object-cover">
+                        <div>
+                            <p class="text-white font-semibold">Sarah Mitchell</p>
+                            <p class="text-slate-400 text-sm">Homeowner, Oakwood</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-8 reveal hover:bg-white/10 transition-colors duration-300">
+                    <div class="flex gap-1 mb-4">
+                        <i data-lucide="star" class="w-5 h-5 text-accent-400 fill-current"></i>
+                        <i data-lucide="star" class="w-5 h-5 text-accent-400 fill-current"></i>
+                        <i data-lucide="star" class="w-5 h-5 text-accent-400 fill-current"></i>
+                        <i data-lucide="star" class="w-5 h-5 text-accent-400 fill-current"></i>
+                        <i data-lucide="star" class="w-5 h-5 text-accent-400 fill-current"></i>
+                    </div>
+                    <p class="text-slate-300 mb-6 italic leading-relaxed">"Our restaurant's lighting needed a complete overhaul. Raceway Electric delivered stunning results on time and on budget. They understand commercial needs perfectly."</p>
+                    <div class="flex items-center gap-4">
+                        <img src="https://static.photos/people/80x80/23" alt="Customer" class="w-12 h-12 rounded-full object-cover">
+                        <div>
+                            <p class="text-white font-semibold">Marcus Chen</p>
+                            <p class="text-slate-400 text-sm">Owner, Bistro 54</p>
+                        </div>
+                    </div>
+                </div>
+
+ 
+
+                <div class="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-8 reveal hover:bg-white/10 transition-colors duration-300">
+                    <div class="flex gap-1 mb-4">
+                        <i data-lucide="star" class="w-5 h-5 text-accent-400 fill-current"></i>
+                        <i data-lucide="star" class="w-5 h-5 text-accent-400 fill-current"></i>
+                        <i data-lucide="star" class="w-5 h-5 text-accent-400 fill-current"></i>
+                        <i data-lucide="star" class="w-5 h-5 text-accent-400 fill-current"></i>
+                        <i data-lucide="star" class="w-5 h-5 text-accent-400 fill-current"></i>
+                    </div>
+                    <p class="text-slate-300 mb-6 italic leading-relaxed">"Called at 2 AM during a power outage. They arrived within 30 minutes and had us back online quickly. True 24/7 service when you need it most. Lifesavers!"</p>
+                    <div class="flex items-center gap-4">
+                        <img src="https://static.photos/people/80x80/34" alt="Customer" class="w-12 h-12 rounded-full object-cover">
+                        <div>
+                            <p class="text-white font-semibold">Jennifer Adams</p>
+                            <p class="text-slate-400 text-sm">Homeowner, Riverside</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-24 bg-black">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid lg:grid-cols-2 gap-16">
+                <!-- Contact Info -->
+                <div class="reveal">
+                    <span class="text-accent-300 font-bold tracking-wider text-sm uppercase">Contact Us</span>
+                    <h2 class="font-serif text-4xl md:text-5xl font-bold text-white mt-4 mb-6">Ready to Power Your Project?</h2>
+                    <p class="text-slate-300 text-lg mb-8 leading-relaxed">
+                        Whether you need a quick repair or a major installation, we're here to help. Get your free estimate today.
+                    </p>
+
+                    <div class="space-y-6 mb-8">
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 bg-primary-900 rounded-full flex items-center justify-center text-white">
+                                <i data-lucide="phone" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <p class="text-sm text-slate-400 font-medium">Phone</p>
+                                <a href="tel:+1234567890" class="text-white font-semibold text-lg hover:text-accent-500 transition-colors">(123) 456-7890</a>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 bg-primary-900 rounded-full flex items-center justify-center text-white">
+                                <i data-lucide="mail" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <p class="text-sm text-slate-400 font-medium">Email</p>
+                                <a href="mailto:info@.com" class="text-white font-semibold text-lg hover:text-accent-500 transition-colors">info@.com</a>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 bg-primary-900 rounded-full flex items-center justify-center text-white">
+                                <i data-lucide="map-pin" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <p class="text-sm text-slate-400 font-medium">Service Area</p>
+                                <p class="text-white font-semibold text-lg">Greater Metro Area & Surrounding Counties</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-slate-900 p-6 rounded-2xl border border-slate-100 shadow-lg">
+                        <div class="flex items-center gap-3 mb-3">
+                            <i data-lucide="clock" class="w-6 h-6 text-accent-300"></i>
+                            <h3 class="font-bold text-white">Business Hours</h3>
+                        </div>
+                        <div class="grid grid-cols-2 gap-4 text-sm">
+                            <div>
+                                <p class="font-semibold text-accent-300">Mon - Fri</p>
+                                <p class="text-slate-300">7:00 AM - 6:00 PM</p>
+                            </div>
+                            <div>
+                                <p class="font-semibold text-accent-300">Saturday</p>
+                                <p class="text-slate-300">8:00 AM - 4:00 PM</p>
+                            </div>
+                            <div class="col-span-2">
+                                <p class="font-semibold text-accent-300">Sunday & Holidays</p>
+                                <p class=" font-medium">Emergency Only - 24/7</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contact Form -->
+                <div class="bg-slate-900 rounded-2xl p-8 md:p-10 shadow-xl border border-slate-100 reveal">
+                    <form id="contactForm" class="space-y-6">
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-sm font-semibold text-slate-300 mb-2">First Name</label>
+                                <input type="text" required class="w-full px-4 py-3 rounded-lg border border-slate-200 focus:border-accent-500 focus:ring-2 focus:ring-accent-400/20 outline-none transition-all" placeholder="John">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-semibold text-slate-300 mb-2">Last Name</label>
+                                <input type="text" required class="w-full px-4 py-3 rounded-lg border border-slate-200 focus:border-accent-500 focus:ring-2 focus:ring-accent-400/20 outline-none transition-all" placeholder="Doe">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-semibold text-slate-300 mb-2">Phone Number</label>
+                            <input type="tel" required class="w-full px-4 py-3 rounded-lg border border-slate-200 focus:border-accent-500 focus:ring-2 focus:ring-accent-400/20 outline-none transition-all" placeholder="(123) 456-7890">
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-semibold text-slate-300 mb-2">Email Address</label>
+                            <input type="email" required class="w-full px-4 py-3 rounded-lg border border-slate-200 focus:border-accent-500 focus:ring-2 focus:ring-accent-400/20 outline-none transition-all" placeholder="john@example.com">
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-semibold text-slate-300 mb-2">Service Type</label>
+                            <select required class="w-full px-4 py-3 rounded-lg border border-slate-200 focus:border-accent-500 focus:ring-2 focus:ring-accent-400/20 outline-none transition-all bg-white">
+                                <option value="">Select a service...</option>
+                                <option value="residential">Residential Electrical</option>
+                                <option value="commercial">Commercial Electrical</option>
+                                <option value="emergency">Emergency Repair</option>
+                                <option value="inspection">Safety Inspection</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-semibold text-accent-00 mb-2">Message</label>
+                            <textarea rows="4" class="w-full px-4 py-3 rounded-lg border border-slate-200 focus:border-accent-500 focus:ring-2 focus:ring-accent-400/20 outline-none transition-all resize-none" placeholder="Tell us about your project or emergency..."></textarea>
+                        </div>
+
+                        <button type="submit" class="w-full bg-accent-500 text-white font-bold py-4 rounded-lg hover:bg-accent-500 hover:text-primary-900 transition-all duration-300 flex items-center justify-center gap-2 group">
+                            <span>Send Message</span>
+                            <i data-lucide="send" class="w-5 h-5 group-hover:translate-x-1 transition-transform"></i>
+                        </button>
+
+                        <p class="text-xs text-slate-400 text-center">
+                            By submitting this form, you agree to be contacted regarding your electrical service needs. Emergency? Call us directly.
+                        </p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-primary-800 text-white py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-12 mb-12">
+                <div class="md:col-span-2">
+                    <div class="flex items-center space-x-3 mb-6">
+                        <div class="bg-white/10 p-2 rounded-lg">
+                            <i data-lucide="zap" class="w-6 h-6 text-accent-400"></i>
+                        </div>
+                        <span class="font-serif text-2xl font-bold">Raceway Electric</span>
+                    </div>
+                    <p class="text-slate-400 leading-relaxed mb-6 max-w-md">
+                        Providing premium electrical services with integrity and expertise for over 20 years. Licensed, insured, and committed to your safety.
+                    </p>
+                    <div class="flex gap-4">
+                        <a href="#" class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-accent-500 hover:text-primary-900 transition-all duration-300">
+                            <i data-lucide="facebook" class="w-5 h-5"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-accent-500 hover:text-primary-900 transition-all duration-300">
+                            <i data-lucide="instagram" class="w-5 h-5"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-accent-500 hover:text-primary-900 transition-all duration-300">
+                            <i data-lucide="linkedin" class="w-5 h-5"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div>
+                    <h4 class="font-bold text-lg mb-6">Quick Links</h4>
+                    <ul class="space-y-3 text-slate-400">
+                        <li><a href="#services" class="hover:text-accent-400 transition-colors">Services</a></li>
+                        <li><a href="#about" class="hover:text-accent-400 transition-colors">About Us</a></li>
+                        <li><a href="#testimonials" class="hover:text-accent-400 transition-colors">Testimonials</a></li>
+                        <li><a href="#contact" class="hover:text-accent-400 transition-colors">Contact</a></li>
+                        <li><a href="#" class="hover:text-accent-400 transition-colors">Emergency Service</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-bold text-lg mb-6">Certifications</h4>
+                    <ul class="space-y-3 text-slate-400">
+                        <li class="flex items-center gap-2">
+                            <i data-lucide="check-circle" class="w-4 h-4 text-accent-400"></i>
+                            Licensed Master Electrician
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <i data-lucide="check-circle" class="w-4 h-4 text-accent-400"></i>
+                            Fully Insured
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <i data-lucide="check-circle" class="w-4 h-4 text-accent-400"></i>
+                            OSHA Certified
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <i data-lucide="check-circle" class="w-4 h-4 text-accent-400"></i>
+                            BBB A+ Rated
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="text-slate-500 text-sm">
+                    © 2024 Raceway Electric Services. All rights reserved.
+                </p>
+                <div class="flex gap-6 text-sm text-slate-500">
+                    <a href="#" class="hover:text-white transition-colors">Privacy Policy</a>
+                    <a href="#" class="hover:text-white transition-colors">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Close mobile menu when clicking on a link
+        mobileMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+
+        // Navbar scroll effect
+        const navbar = document.getElementById('navbar');
+        let lastScroll = 0;
+
+        window.addEventListener('scroll', () => {
+            const currentScroll = window.pageYOffset;
+            
+            if (currentScroll > 100) {
+                navbar.classList.add('shadow-md');
+            } else {
+                navbar.classList.remove('shadow-md');
+            }
+            
+            lastScroll = currentScroll;
+        });
+
+        // Scroll Reveal Animation
+        const revealElements = document.querySelectorAll('.reveal');
+        
+        const revealOnScroll = () => {
+            const windowHeight = window.innerHeight;
+            const elementVisible = 150;
+            
+            revealElements.forEach((element) => {
+                const elementTop = element.getBoundingClientRect().top;
+                
+                if (elementTop < windowHeight - elementVisible) {
+                    element.classList.add('active');
+                }
+            });
+        };
+
+        window.addEventListener('scroll', revealOnScroll);
+        // Trigger once on load
+        revealOnScroll();
+
+        // Form Submission Handler
+        const contactForm = document.getElementById('contactForm');
+        
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            // Simulate form submission
+            const button = contactForm.querySelector('button[type="submit"]');
+            const originalText = button.innerHTML;
+            
+            button.innerHTML = '<span>Sending...</span>';
+            button.disabled = true;
+            
+            setTimeout(() => {
+                button.innerHTML = '<i data-lucide="check" class="w-5 h-5"></i><span>Message Sent!</span>';
+                button.classList.remove('bg-primary-900');
+                button.classList.add('bg-green-600');
+                lucide.createIcons();
+                
+                setTimeout(() => {
+                    button.innerHTML = originalText;
+                    button.disabled = false;
+                    button.classList.remove('bg-green-600');
+                    button.classList.add('bg-primary-900');
+                    contactForm.reset();
+                    lucide.createIcons();
+                }, 3000);
+            }, 1500);
+        });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
