@@ -353,22 +353,17 @@
       lucide.createIcons();
   </script>
 <script type="module">
-    // 1️⃣ Import Supabase client
-    import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm'
-  
-    // 2️⃣ Initialize Supabase
-    const supabaseUrl = "https://YOUR_PROJECT_REF.supabase.co"
-    const supabaseKey = "YOUR_PUBLIC_ANON_KEY"  // Use the anon key from Supabase → Settings → API
+    import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.29.0/dist/supabase.min.js'
+    
+    const supabaseUrl = "https://imojiudetgpkvvvfufld.supabase.co"
+    const supabaseKey = "sb_publishable_UFAx-ucMBv91P2mXeocorw_Dnmow6mc"
     const supabase = createClient(supabaseUrl, supabaseKey)
   
-    // 3️⃣ Contact form submission
     const form = document.getElementById("contactForm")
     form.addEventListener("submit", async (e) => {
       e.preventDefault()
-  
       const [firstNameInput, lastNameInput, phoneInput, emailInput, serviceSelect, messageTextarea] =
         form.querySelectorAll("input, select, textarea")
-  
       const data = {
         first_name: firstNameInput.value.trim(),
         last_name: lastNameInput.value.trim(),
@@ -377,19 +372,14 @@
         service: serviceSelect.value,
         message: messageTextarea.value.trim()
       }
-  
       try {
-        const { error } = await supabase
-          .from('contacts')
-          .insert([data])
-  
+        const { error } = await supabase.from('contacts').insert([data])
         if (error) throw error
-  
         alert("Message sent successfully!")
         form.reset()
       } catch (err) {
         console.error(err)
-        alert("Failed to send message. Check console for details.")
+        alert("Failed to send message. Check console.")
       }
     })
   </script>
