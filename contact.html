@@ -347,8 +347,49 @@
               </div>
           </div>
       </div>
-<\/footer>
+</footer>
 
   <script>
       lucide.createIcons();
   </script>
+<script>
+    const form = document.getElementById("contactForm");
+    
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+    
+      const [firstNameInput, lastNameInput, phoneInput, emailInput, serviceSelect, messageTextarea] =
+        form.querySelectorAll("input, select, textarea");
+    
+      const data = {
+        firstName: firstNameInput.value.trim(),
+        lastName: lastNameInput.value.trim(),
+        phone: phoneInput.value.trim(),
+        email: emailInput.value.trim(),
+        service: serviceSelect.value,
+        message: messageTextarea.value.trim()
+      };
+    
+      try {
+        // Make a POST request to your server API
+        const response = await fetch("/api/contact", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(data) // <-- corrected here
+        });
+    
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+    
+        alert("Message sent successfully!");
+        form.reset();
+      } catch (err) {
+        console.error(err);
+        alert("Failed to send message. Check console for details.");
+      }
+    });
+    </script>
+    </div></section></body></html>
