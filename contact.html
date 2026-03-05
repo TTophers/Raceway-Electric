@@ -352,44 +352,45 @@
   <script>
       lucide.createIcons();
   </script>
-<script>
-    const form = document.getElementById("contactForm");
-    
+<script type="module">
+    // 1️⃣ Import Supabase client
+    import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm'
+  
+    // 2️⃣ Initialize Supabase
+    const supabaseUrl = "https://YOUR_PROJECT_REF.supabase.co"
+    const supabaseKey = "YOUR_PUBLIC_ANON_KEY"  // Use the anon key from Supabase → Settings → API
+    const supabase = createClient(supabaseUrl, supabaseKey)
+  
+    // 3️⃣ Contact form submission
+    const form = document.getElementById("contactForm")
     form.addEventListener("submit", async (e) => {
-      e.preventDefault();
-    
+      e.preventDefault()
+  
       const [firstNameInput, lastNameInput, phoneInput, emailInput, serviceSelect, messageTextarea] =
-        form.querySelectorAll("input, select, textarea");
-    
+        form.querySelectorAll("input, select, textarea")
+  
       const data = {
-        firstName: firstNameInput.value.trim(),
-        lastName: lastNameInput.value.trim(),
+        first_name: firstNameInput.value.trim(),
+        last_name: lastNameInput.value.trim(),
         phone: phoneInput.value.trim(),
         email: emailInput.value.trim(),
         service: serviceSelect.value,
         message: messageTextarea.value.trim()
-      };
-    
-      try {
-        // Make a POST request to your server API
-        const response = await fetch("/api/contact", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify(data) // <-- corrected here
-        });
-    
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-    
-        alert("Message sent successfully!");
-        form.reset();
-      } catch (err) {
-        console.error(err);
-        alert("Failed to send message. Check console for details.");
       }
-    });
-    </script>
+  
+      try {
+        const { error } = await supabase
+          .from('contacts')
+          .insert([data])
+  
+        if (error) throw error
+  
+        alert("Message sent successfully!")
+        form.reset()
+      } catch (err) {
+        console.error(err)
+        alert("Failed to send message. Check console for details.")
+      }
+    })
+  </script>
     </div></section></body></html>
