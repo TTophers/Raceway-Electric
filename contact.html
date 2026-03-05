@@ -353,38 +353,38 @@
       lucide.createIcons();
   </script>
 <script type="module">
-  import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.29.0/dist/esm/index.js';
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
     
     const supabaseUrl = "https://imojiudetgpkvvvfufld.supabase.co"
     const supabaseKey = "sb_publishable_UFAx-ucMBv91P2mXeocorw_Dnmow6mc"
-    const supabase = createClient(supabaseUrl, supabaseKey)
-  
-    const form = document.getElementById("contactForm");
-  form.addEventListener("submit", async (e) => {
-    e.preventDefault();
+ 
+const supabase = createClient(supabaseUrl, supabaseKey);
 
-    const [firstNameInput, lastNameInput, phoneInput, emailInput, serviceSelect, messageTextarea] =
-      form.querySelectorAll("input, select, textarea");
+const form = document.getElementById("contactForm");
 
-    const data = {
-      first_name: firstNameInput.value.trim(),
-      last_name: lastNameInput.value.trim(),
-      phone: phoneInput.value.trim(),
-      email: emailInput.value.trim(),
-      service: serviceSelect.value,
-      message: messageTextarea.value.trim()
-    };
+form.addEventListener("submit", async (e) => {
+  e.preventDefault();
 
-    try {
-      const { error } = await supabase.from('contacts').insert([data]);
-      if (error) throw error;
+  const data = {
+    first_name: document.getElementById("first").value,
+    last_name: document.getElementById("last").value,
+    phone: document.getElementById("phone").value,
+    email: document.getElementById("email").value,
+    service: document.getElementById("service").value,
+    message: document.getElementById("message").value
+  };
 
-      alert("Message sent successfully!");
-      form.reset();
-    } catch (err) {
-      console.error(err);
-      alert("Failed to send message. Check console.");
-    }
-  });
+  const { error } = await supabase
+    .from("messages")
+    .insert([data]);
+
+  if (error) {
+    console.error(error);
+    alert("Failed to send message");
+  } else {
+    alert("Message sent");
+    form.reset();
+  }
+});
   </script>
     </div></section></body></html>
