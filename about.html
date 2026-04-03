@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Raceway Electric LLC Services | Licensed Electrician | 30 Years Experience</title>
+    <meta name="description" content="Professional licensed electrician with 30 years of experience serving residential and commercial clients.">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    },
+                    colors: {
+                        primary: {
+                            900: '#000000', // Pure black for brand match
+                            800: '#0a0a0a',
+                            700: '#171717',
+                        },
+                        accent: {
+                            500: '#0d0081', // Lightning yellow
+                            400: '#E9100f',
+                            300: '#acc6fd',
+                            100: '#a00057'
+                        }
+                    },
+                    animation: {
+                        'fade-in-up': 'fadeInUp 0.8s ease-out forwards',
+                        'slide-in-right': 'slideInRight 0.6s ease-out forwards',
+                    },
+                    keyframes: {
+                        fadeInUp: {
+                            '0%': { opacity: '0', transform: 'translateY(30px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        slideInRight: {
+                            '0%': { opacity: '0', transform: 'translateX(50px)' },
+                            '100%': { opacity: '1', transform: 'translateX(0)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+        
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .hover-lift {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .hover-lift:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+        
+        .gradient-overlay {
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(30, 41, 59, 0.8) 100%);
+        }
+        
+        .electric-accent {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .electric-accent::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, #f59e0b, #fbbf24, #f59e0b);
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+        }
+        
+        .electric-accent:hover::after {
+            transform: translateX(0);
+        }
+    </style>
+</head>
+<body class="font-sans text-slate-200 bg-black antialiased">
+
+    <!-- Navigation -->
+    <nav id="navbar" class="fixed w-full z-50 transition-all duration-300 bg-accent-800 backdrop-blur-md shadow-sm text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <!-- Logo -->
+                <div class="flex items-center space-x-3">
+              <div class="bg-primary-900 p-2 rounded-lg flex items-center justify-center">
+           <img src="pics/logo.jpg" alt="Raceway Electric LLC Logo" class="h-16 md:h-24 w-auto object-contain">
+                    </div>
+                    <div>
+                        <span class="font-serif text-xl font-bold text-white">Raceway Electric LLC</span>
+                        <p class="text-xs text-slate-400 font-medium tracking-wider">LICENSED & INSURED</p>
+                    </div>
+                </div>
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="/index.html" class="text-slate-300 hover:text-white font-medium transition-colors electric-accent pb-1">Home</a>
+                    <a href="#about" class="text-slate-300 hover:text-white font-medium transition-colors electric-accent pb-1">About</a>
+                    <a href="#testimonials" class="text-slate-300 hover:text-white font-medium transition-colors electric-accent pb-1">Testimonials</a>
+                    <a href="/port.html" class="text-slate-300 hover:text-white font-medium transition-colors electric-accent pb-1">protfolio</a>
+                    <a href="/contact.html" class="bg-accent-500 text-white px-6 py-3 rounded-full font-semibold hover:bg-accent-500 transition-all duration-300 flex items-center gap-2 group">
+                        <i data-lucide="phone" class="w-4 h-4 group-hover:animate-pulse"></i>
+                        <span>Get a Quote</span>
+                    </a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button id="mobile-menu-btn" class="md:hidden p-2 rounded-lg hover:bg-slate-100 transition-colors">
+                    <i data-lucide="menu" class="w-6 h-6 text-white"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-slate-900 border-t border-slate-100 absolute w-full shadow-lg">
+            <div class="px-4 py-6 space-y-4">
+                <a href="/index.html" class="block text-slate-300 hover:text-white font-medium py-2">Home</a>
+                <a href="#about" class="block text-slate-300 hover:text-white font-medium py-2">About</a>
+                <a href="#testimonials" class="block text-slate-300 hover:text-white font-medium py-2">Testimonials</a>
+                <a href="#contact" class="block bg-primary-500 text-white px-6 py-3 rounded-full font-semibold text-center mt-4">Get a Quote</a>
+            </div>
+        </div>
+</nav>
+    <!-- About Section -->
+    <section id="about" class="py-20 bg-primary-900 text-slate-200">
+        <div class="max-w-6xl mx-auto px-6">
+            
+            <!-- Section Title -->
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-bold font-serif text-white">About Us</h2>
+                <p class="text-slate-400 mt-4 max-w-2xl mx-auto">
+                    30+ years of trusted electrical experience delivering safe, clean, and reliable work.
+                </p>
+            </div>
+
+            <!-- Content Wrapper -->
+            <div class="space-y-16">
+
+                <!-- Block 1 -->
+                <div class="bg-primary-800 border border-slate-700 rounded-2xl p-6 md:p-10 shadow-lg overflow-hidden">
+                    <img src="pics/about1.jpg" alt="Electrician at work" 
+                        class="w-48 md:w-72 float-left mr-6 mb-4 rounded-xl border border-slate-600 object-cover">
+
+                    <p class="text-slate-300 leading-relaxed">
+                        Raceway Electric LLC has been providing high-quality electrical services for over three decades.
+                        With a strong focus on safety, precision, and long-term reliability, every project is handled with
+                        the same level of care—whether it's a small residential fix or a full commercial install.
+                    </p>
+
+                    <p class="text-slate-400 mt-4 leading-relaxed">
+                        Our experience allows us to quickly diagnose issues, prevent future problems, and deliver clean,
+                        code-compliant work that stands the test of time. We believe in doing the job right the first time.
+                    </p>
+
+                    <div class="clear-both"></div>
+                </div>
+
+                <!-- Block 2 -->
+                <div class="bg-primary-800 border border-slate-700 rounded-2xl p-6 md:p-10 shadow-lg overflow-hidden">
+                    <img src="pics/about2.jpg" alt="Electrical panel work" 
+                        class="w-48 md:w-72 float-right ml-6 mb-4 rounded-xl border border-slate-600 object-cover">
+
+                    <p class="text-slate-300 leading-relaxed">
+                        We take pride in our craftsmanship and attention to detail. Every wire, panel, and connection is
+                        installed with precision and care to ensure maximum safety and performance.
+                    </p>
+
+                    <p class="text-slate-400 mt-4 leading-relaxed">
+                        Our goal is simple: provide honest, dependable service that customers can trust. From start to finish,
+                        we communicate clearly, show up on time, and leave every job cleaner than we found it.
+                    </p>
+
+                    <div class="clear-both"></div>
+                </div>
+
+            </div>
+        </div>
+    </section>
