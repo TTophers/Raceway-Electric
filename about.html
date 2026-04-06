@@ -158,8 +158,17 @@
 
                 <!-- Block 1 -->
                 <div class="bg-primary-800 border border-slate-700 rounded-2xl p-6 md:p-10 shadow-lg overflow-hidden">
-                    <img src="pics/1212.JPG" alt="Electrician at work" 
-                        class="w-48 md:w-72 float-left mr-6 mb-4 rounded-xl border border-slate-600 object-cover">
+                    <img src="pics/1212.JPG" alt="Electrician at work"
+                        class="w-[50px] w-48 md:w-72 float-left mr-6 mb-4 rounded-xl border border-slate-600 object-cover">
+                    <style>
+                        @media (max-width: 767px) {
+                            #about img {
+                                width: 130px !important;
+                                min-width: 0 !important;
+                                max-width: none !important;
+                            }
+                        }
+                    </style>
 
                     <p class="text-slate-300 leading-relaxed">
                         Tom DiPasquale is the owner of Raceway Electric LLC and master electrician with over 33 years of experience. Alongside him is his son and apprentice Triston DiPasquale. 
