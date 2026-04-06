@@ -58,6 +58,16 @@
     </script>
     
 <style>
+    /* Prevent horizontal (left-to-right) scrolling on the entire page */
+    html, body {
+        overflow-x: hidden !important;
+        max-width: 100vw;
+    }
+    /* Prevent all elements from exceeding viewport width */
+    * {
+        box-sizing: border-box;
+        max-width: 100vw;
+    }
     /* Responsive font sizes for project-card headings and paragraphs on mobile */
     @media (max-width: 767px) {
         .project-card h3 {
@@ -233,7 +243,7 @@
     <!-- Navigation -->
 
     <!-- Navigation -->
-    <nav id="navbar" class="fixed w-full z-50 transition-all duration-300 bg-black/90 backdrop-blur-md shadow-sm text-white">
+    <nav id="navbar" class="fixed inset-x-0 top-0 z-50 max-w-full overflow-x-hidden transition-all duration-300 bg-black/90 backdrop-blur-md shadow-sm text-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-20">
                 <!-- Logo -->
@@ -687,10 +697,6 @@
                 <p class="text-slate-500 text-sm">
                     © 2024 Raceway Electric LLC Services. All rights reserved.
                 </p>
-                <div class="flex gap-6 text-sm text-slate-500">
-                    <a href="#" class="hover:text-white transition-colors">Privacy Policy</a>
-                    <a href="#" class="hover:text-white transition-colors">Terms of Service</a>
-                </div>
             </div>
         </div>
     </footer>
@@ -741,7 +747,128 @@ const projects = [
     image: "/portpics/p4.JPG",
     description:
     "Installed a high-speed EV charging station with dedicated circuit and safety compliance."
+},
+{
+    title: "EV Charger Installation",
+    category: "Residential",
+    categoryColor: "text-blue-600",
+    location: "Denver, CO",
+    rating: "5.0",
+    image: "/portpics/p4.JPG",
+    description:
+    "Installed a high-speed EV charging station with dedicated circuit and safety compliance."
+},
+{
+    title: "EV Charger Installation",
+    category: "Residential",
+    categoryColor: "text-blue-600",
+    location: "Denver, CO",
+    rating: "5.0",
+    image: "/portpics/p4.JPG",
+    description:
+    "Installed a high-speed EV charging station with dedicated circuit and safety compliance."
+},
+{
+    title: "EV Charger Installation",
+    category: "Residential",
+    categoryColor: "text-blue-600",
+    location: "Denver, CO",
+    rating: "5.0",
+    image: "/portpics/p4.JPG",
+    description:
+    "Installed a high-speed EV charging station with dedicated circuit and safety compliance."
+},
+{
+    title: "EV Charger Installation",
+    category: "Residential",
+    categoryColor: "text-blue-600",
+    location: "Denver, CO",
+    rating: "5.0",
+    image: "/portpics/p4.JPG",
+    description:
+    "Installed a high-speed EV charging station with dedicated circuit and safety compliance."
+},
+{
+    title: "EV Charger Installation",
+    category: "Residential",
+    categoryColor: "text-blue-600",
+    location: "Denver, CO",
+    rating: "5.0",
+    image: "/portpics/p4.JPG",
+    description:
+    "Installed a high-speed EV charging station with dedicated circuit and safety compliance."
+},
+{
+    title: "EV Charger Installation",
+    category: "Residential",
+    categoryColor: "text-blue-600",
+    location: "Denver, CO",
+    rating: "5.0",
+    image: "/portpics/p4.JPG",
+    description:
+    "Installed a high-speed EV charging station with dedicated circuit and safety compliance."
+},
+{
+    title: "EV Charger Installation",
+    category: "Residential",
+    categoryColor: "text-blue-600",
+    location: "Denver, CO",
+    rating: "5.0",
+    image: "/portpics/p4.JPG",
+    description:
+    "Installed a high-speed EV charging station with dedicated circuit and safety compliance."
+},
+{
+    title: "EV Charger Installation",
+    category: "Residential",
+    categoryColor: "text-blue-600",
+    location: "Denver, CO",
+    rating: "5.0",
+    image: "/portpics/p4.JPG",
+    description:
+    "Installed a high-speed EV charging station with dedicated circuit and safety compliance."
+},
+{
+    title: "EV Charger Installation",
+    category: "Residential",
+    categoryColor: "text-blue-600",
+    location: "Denver, CO",
+    rating: "5.0",
+    image: "/portpics/p4.JPG",
+    description:
+    "Installed a high-speed EV charging station with dedicated circuit and safety compliance."
+},
+{
+    title: "EV Charger Installation",
+    category: "Residential",
+    categoryColor: "text-blue-600",
+    location: "Denver, CO",
+    rating: "5.0",
+    image: "/portpics/p4.JPG",
+    description:
+    "Installed a high-speed EV charging station with dedicated circuit and safety compliance."
+},
+{
+    title: "EV Charger Installation",
+    category: "Residential",
+    categoryColor: "text-blue-600",
+    location: "Denver, CO",
+    rating: "2.0",
+    image: "/portpics/p4.JPG",
+    description:
+    "Installed a high-speed EV charging station with dedicated circuit and safety compliance."
+},
+{
+    title: "EV Charger Installation",
+    category: "Residential",
+    categoryColor: "text-blue-600",
+    location: "Denver, CO",
+    rating: "5.0",
+    image: "/portpics/p4.JPG",
+    description:
+    "Installed a high-speed EV charging station with dedicated circuit and safety compliance."
 }
+
 ];
 
 // MOBILE-FIRST OVERLAY LOGIC

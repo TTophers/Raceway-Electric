@@ -110,6 +110,20 @@
         .electric-accent:hover::after {
             transform: translateX(0);
         }
+        /* Base styles for all screens */
+img.my-picture {
+  width: auto; 
+  max-width: 100%; 
+  height: auto; 
+}
+
+/* Mobile screens only */
+@media screen and (max-width: 480px) {
+  img.my-picture {
+    width: 50px; /* super small */
+    height: auto;
+  }
+}
     </style>
 </head>
 <body class="font-sans text-slate-200 bg-black antialiased">
