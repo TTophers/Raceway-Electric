@@ -779,7 +779,7 @@ function closeLightbox() {
 
 // Panel drag up/down for sliding
 let startY = null;
-let startPanelY = null;
+let startPanelTranslateY = 0;
 let dragging = false;
 const maxSlideDown = () => window.innerHeight * 0.5; // 50% of viewport height
 
@@ -789,29 +789,46 @@ overlayPanel.addEventListener('touchstart', function(e) {
     if (e.target.closest('button')) return;
     dragging = true;
     startY = e.touches[0].clientY;
-    startPanelY = overlayPanel.getBoundingClientRect().top;
+    // Determine current translateY of the panel
+    const computedStyle = window.getComputedStyle(overlayPanel);
+    const matrix = computedStyle.transform;
+    let currentTranslateY = 0;
+    if (matrix && matrix !== 'none') {
+        const values = matrix.match(/matrix.*\((.+)\)/)[1].split(', ');
+        // 5th value is translateY for 2d matrix
+        currentTranslateY = parseFloat(values[5]);
+        if (isNaN(currentTranslateY)) currentTranslateY = 0;
+    }
+    // If panel is down, start at 50vh
+    if (overlayPanel.classList.contains('slide-down')) {
+        currentTranslateY = maxSlideDown();
+    }
+    startPanelTranslateY = currentTranslateY;
 }, {passive: true});
 
 overlayPanel.addEventListener('touchmove', function(e) {
     if (!dragging || imageIsFull) return;
     const delta = e.touches[0].clientY - startY;
-    if (delta > 0) {
-        // Clamp delta to 50% of viewport height
-        const clampedDelta = Math.min(delta, maxSlideDown());
-        overlayPanel.style.transform = `translateY(${clampedDelta}px)`;
-        // Fade out panel-content as you drag
-        const panelContent = overlayPanel.querySelector('.panel-content');
-        if (panelContent) {
-            const fade = 1 - Math.min(clampedDelta / maxSlideDown(), 1);
-            panelContent.style.opacity = fade;
-        }
+    // Allow dragging both up and down, clamp between 0 and maxSlideDown()
+    let newTranslateY = startPanelTranslateY + delta;
+    newTranslateY = Math.max(0, Math.min(newTranslateY, maxSlideDown()));
+    overlayPanel.style.transform = `translateY(${newTranslateY}px)`;
+    // Fade out panel-content as you drag down, fade in as you drag up
+    const panelContent = overlayPanel.querySelector('.panel-content');
+    if (panelContent) {
+        const fade = 1 - Math.min(newTranslateY / maxSlideDown(), 1);
+        panelContent.style.opacity = fade;
     }
 }, {passive: true});
 
 overlayPanel.addEventListener('touchend', function(e) {
     if (!dragging || imageIsFull) return;
+    // Calculate where the panel ended up
     const endY = e.changedTouches[0].clientY;
     const delta = endY - startY;
+    // Compute final translateY
+    let finalTranslateY = startPanelTranslateY + delta;
+    finalTranslateY = Math.max(0, Math.min(finalTranslateY, maxSlideDown()));
     overlayPanel.style.transform = '';
     // Restore panel-content opacity
     const panelContent = overlayPanel.querySelector('.panel-content');
@@ -819,10 +836,16 @@ overlayPanel.addEventListener('touchend', function(e) {
         panelContent.style.opacity = '';
     }
     dragging = false;
-    if (delta > 80) {
+    // Threshold for snapping up or down: 25% of maxSlideDown
+    const threshold = maxSlideDown() * 0.25;
+    if (finalTranslateY > threshold) {
         // Slide down (partially, not fully, to 50vh)
         overlayPanel.classList.add('slide-down');
         panelIsDown = true;
+    } else {
+        // Snap back up
+        overlayPanel.classList.remove('slide-down');
+        panelIsDown = false;
     }
 });
 
