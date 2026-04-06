@@ -146,9 +146,11 @@
         transform: translateY(0);
         transition: transform 0.35s cubic-bezier(.52,1.72,.38,.91);
         touch-action: pan-y;
+        will-change: transform;
     }
     .mobile-overlay-info-panel.slide-down {
-        transform: translateY(100%);
+        /* Slide down to 70% of viewport height */
+        transform: translateY(70vh);
     }
     .mobile-overlay-info-panel .handle {
         width: 48px;
@@ -156,6 +158,16 @@
         background: #e5e7eb;
         border-radius: 3px;
         margin: 0 auto 1.25rem auto;
+        position: relative;
+        z-index: 2;
+    }
+    .mobile-overlay-info-panel .panel-content {
+        transition: opacity 0.35s cubic-bezier(.52,1.72,.38,.91);
+        opacity: 1;
+    }
+    .mobile-overlay-info-panel.slide-down .panel-content {
+        opacity: 0;
+        pointer-events: none;
     }
     .mobile-overlay-close {
         position: absolute;
@@ -591,20 +603,22 @@
     </button>
     <div class="mobile-overlay-info-panel" id="mobile-overlay-info-panel">
         <div class="handle"></div>
-        <div class="flex items-center gap-2 text-yellow-500 mb-4">
-            <i data-lucide="star" class="w-5 h-5 fill-current"></i>
-            <span id="mobile-overlay-rating" class="font-bold text-gray-900"></span>
-            <span class="text-black text-sm">Client Rating</span>
+        <div class="panel-content">
+            <div class="flex items-center gap-2 text-yellow-500 mb-4">
+                <i data-lucide="star" class="w-5 h-5 fill-current"></i>
+                <span id="mobile-overlay-rating" class="font-bold text-gray-900"></span>
+                <span class="text-black text-sm">Client Rating</span>
+            </div>
+            <h3 id="mobile-overlay-title" class="text-2xl text-black font-bold mb-4"></h3>
+            <p id="mobile-overlay-description" class="text-gray-600 mb-6"></p>
+            <div class="flex items-center gap-3 text-gray-700 mb-6">
+                <i data-lucide="map-pin" class="w-5 h-5 text-blue-600"></i>
+                <span id="mobile-overlay-location"></span>
+            </div>
+            <button class="w-full bg-blue-600 text-white py-3 rounded-xl font-semibold">
+                Request Similar Project
+            </button>
         </div>
-        <h3 id="mobile-overlay-title" class="text-2xl text-black font-bold mb-4"></h3>
-        <p id="mobile-overlay-description" class="text-gray-600 mb-6"></p>
-        <div class="flex items-center gap-3 text-gray-700 mb-6">
-            <i data-lucide="map-pin" class="w-5 h-5 text-blue-600"></i>
-            <span id="mobile-overlay-location"></span>
-        </div>
-        <button class="w-full bg-blue-600 text-white py-3 rounded-xl font-semibold">
-            Request Similar Project
-        </button>
     </div>
 </div>
 
@@ -758,6 +772,7 @@ function closeLightbox() {
 let startY = null;
 let startPanelY = null;
 let dragging = false;
+const maxSlideDown = window.innerHeight * 0.7; // 70% of viewport height
 
 overlayPanel.addEventListener('touchstart', function(e) {
     if (imageIsFull) return;
@@ -771,7 +786,15 @@ overlayPanel.addEventListener('touchmove', function(e) {
     if (!dragging || imageIsFull) return;
     const delta = e.touches[0].clientY - startY;
     if (delta > 0) {
-        overlayPanel.style.transform = `translateY(${delta}px)`;
+        // Clamp delta to 70% of viewport height
+        const clampedDelta = Math.min(delta, window.innerHeight * 0.7);
+        overlayPanel.style.transform = `translateY(${clampedDelta}px)`;
+        // Fade out panel-content as you drag
+        const panelContent = overlayPanel.querySelector('.panel-content');
+        if (panelContent) {
+            const fade = 1 - Math.min(clampedDelta / (window.innerHeight * 0.7), 1);
+            panelContent.style.opacity = fade;
+        }
     }
 }, {passive: true});
 
@@ -780,19 +803,23 @@ overlayPanel.addEventListener('touchend', function(e) {
     const endY = e.changedTouches[0].clientY;
     const delta = endY - startY;
     overlayPanel.style.transform = '';
+    // Restore panel-content opacity
+    const panelContent = overlayPanel.querySelector('.panel-content');
+    if (panelContent) {
+        panelContent.style.opacity = '';
+    }
     dragging = false;
     if (delta > 80) {
-        // Slide down
+        // Slide down (partially, not fully)
         overlayPanel.classList.add('slide-down');
         panelIsDown = true;
-        setTimeout(() => overlayPanel.classList.add('hide'), 350);
     }
 }, {passive: true});
 
 // Click/tap handle to slide up if panel is down
 overlayPanel.querySelector('.handle').addEventListener('click', function(e) {
     if (panelIsDown) {
-        overlayPanel.classList.remove('slide-down', 'hide');
+        overlayPanel.classList.remove('slide-down');
         panelIsDown = false;
     }
 });
