@@ -57,52 +57,144 @@
         }
     </script>
     
-    <style>
-        .reveal {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.8s ease-out;
+<style>
+    .reveal {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: all 0.8s ease-out;
+    }
+    .reveal.active {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    .hover-lift {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .hover-lift:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    }
+    .gradient-overlay {
+        background: linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(30, 41, 59, 0.8) 100%);
+    }
+    .electric-accent {
+        position: relative;
+        overflow: hidden;
+    }
+    .electric-accent::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 3px;
+        background: linear-gradient(90deg, #f59e0b, #fbbf24, #f59e0b);
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+    }
+    .electric-accent:hover::after {
+        transform: translateX(0);
+    }
+    /* --- New Mobile-First Overlay Lightbox --- */
+    .mobile-overlay-lightbox {
+        position: fixed;
+        inset: 0;
+        z-index: 50;
+        background: rgba(0,0,0,0.97);
+        display: none;
+        flex-direction: column;
+        justify-content: flex-end;
+        align-items: stretch;
+        transition: background 0.4s;
+    }
+    .mobile-overlay-lightbox.active {
+        display: flex;
+    }
+    .mobile-overlay-img-container {
+        position: absolute;
+        top: 0; left: 0; right: 0; bottom: 0;
+        z-index: 10;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+        transition: filter 0.4s;
+        cursor: pointer;
+        background: #000;
+    }
+    .mobile-overlay-img-container img {
+        width: 100%;
+        height: auto;
+        max-height: 100vh;
+        object-fit: contain;
+        transition: filter 0.4s;
+        pointer-events: none;
+        user-select: none;
+    }
+    .mobile-overlay-info-panel {
+        position: relative;
+        z-index: 20;
+        background: #fff;
+        border-top-left-radius: 1.25rem;
+        border-top-right-radius: 1.25rem;
+        padding: 2rem 1.25rem 2.5rem 1.25rem;
+        min-height: 40vh;
+        box-shadow: 0 -8px 32px 0 rgba(0,0,0,0.15);
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+        transform: translateY(0);
+        transition: transform 0.35s cubic-bezier(.52,1.72,.38,.91);
+        touch-action: pan-y;
+    }
+    .mobile-overlay-info-panel.slide-down {
+        transform: translateY(100%);
+    }
+    .mobile-overlay-info-panel .handle {
+        width: 48px;
+        height: 6px;
+        background: #e5e7eb;
+        border-radius: 3px;
+        margin: 0 auto 1.25rem auto;
+    }
+    .mobile-overlay-close {
+        position: absolute;
+        top: 1rem;
+        right: 1.5rem;
+        z-index: 30;
+        background: rgba(0,0,0,0.7);
+        border-radius: 9999px;
+        padding: 0.25rem;
+        color: #fff;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        transition: background 0.2s;
+    }
+    .mobile-overlay-close:hover {
+        background: rgba(0,0,0,0.9);
+    }
+    .mobile-overlay-img-container.full {
+        z-index: 99;
+        background: #000;
+        cursor: zoom-out;
+    }
+    .mobile-overlay-info-panel.hide {
+        display: none;
+    }
+    @media (min-width: 768px) {
+        .mobile-overlay-info-panel {
+            border-radius: 2rem;
+            min-height: 0;
+            max-width: 700px;
+            padding: 2.5rem 2.5rem 3rem 2.5rem;
         }
-        
-        .reveal.active {
-            opacity: 1;
-            transform: translateY(0);
+        .mobile-overlay-img-container img {
+            max-width: 90vw;
+            max-height: 75vh;
         }
-        
-        .hover-lift {
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        
-        .hover-lift:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-        }
-        
-        .gradient-overlay {
-            background: linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(30, 41, 59, 0.8) 100%);
-        }
-        
-        .electric-accent {
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .electric-accent::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 3px;
-            background: linear-gradient(90deg, #f59e0b, #fbbf24, #f59e0b);
-            transform: translateX(-100%);
-            transition: transform 0.3s ease;
-        }
-        
-        .electric-accent:hover::after {
-            transform: translateX(0);
-        }
-    </style>
+    }
+</style>
 </head>
 <body class="font-sans text-slate-200 bg-black antialiased">
 
@@ -485,62 +577,34 @@
 
 </div>
 
-
-
-<!-- LIGHTBOX -->
-<div id="lightbox" class="fixed inset-0 z-50 hidden bg-black/95 flex items-center justify-center">
-
-    <div class="w-full h-full flex items-center justify-center p-4 md:p-8">
-
-        <!-- Close Button -->
-        <button onclick="closeLightbox()" class="absolute top-4 right-4 md:top-6 md:right-6 text-white z-50">
-            <i data-lucide="x" class="w-8 h-8"></i>
-        </button>
-
-        <!-- Modal Content -->
-        <div class="bg-white rounded-2xl overflow-hidden w-full max-w-5xl h-full md:h-auto shadow-2xl flex flex-col"
-             onclick="event.stopPropagation()">
-
-            <div class="flex flex-col md:grid md:grid-cols-2 h-full">
-
-                <!-- Image -->
-                <div class="relative h-64 md:h-auto flex-shrink-0 flex items-center justify-center bg-black">
-                    <img id="lightbox-img"
-                    class="w-auto h-auto max-h-[70vh] max-w-[90%] object-contain">
-                    <div class="absolute top-4 left-4">
-                        <span id="lightbox-category"
-                              class="bg-white px-4 py-1 rounded-full text-sm font-semibold"></span>
-                    </div>
-                </div>
-
-                <!-- Info Panel -->
-                <div class="p-6 md:p-8 overflow-y-auto flex-1">
-
-                    <div class="flex items-center gap-2 text-yellow-500 mb-4">
-                        <i data-lucide="star" class="w-5 h-5 fill-current"></i>
-                        <span id="lightbox-rating"
-                              class="font-bold text-gray-900"></span>
-                        <span class="text-black text-sm">Client Rating</span>
-                    </div>
-
-                    <h3 id="lightbox-title"
-                        class="text-2xl text-black font-bold mb-4"></h3>
-
-                    <p id="lightbox-description"
-                       class="text-gray-600 mb-6"></p>
-
-                    <div class="flex items-center gap-3 text-gray-700 mb-6">
-                        <i data-lucide="map-pin" class="w-5 h-5 text-blue-600"></i>
-                        <span id="lightbox-location"></span>
-                    </div>
-
-                    <button class="w-full bg-blue-600 text-white py-3 rounded-xl font-semibold">
-                        Request Similar Project
-                    </button>
-
-                </div>
-            </div>
+<!-- NEW MOBILE-FIRST OVERLAY LIGHTBOX -->
+<div id="mobile-overlay-lightbox" class="mobile-overlay-lightbox">
+    <div class="mobile-overlay-img-container" id="mobile-overlay-img-container">
+        <img id="mobile-overlay-img" src="" alt="Project Image" draggable="false" />
+        <div class="absolute top-4 left-4 z-30">
+            <span id="mobile-overlay-category"
+                  class="bg-white px-4 py-1 rounded-full text-sm font-semibold"></span>
         </div>
+    </div>
+    <button class="mobile-overlay-close" id="mobile-overlay-close" aria-label="Close">
+        <i data-lucide="x" class="w-8 h-8"></i>
+    </button>
+    <div class="mobile-overlay-info-panel" id="mobile-overlay-info-panel">
+        <div class="handle"></div>
+        <div class="flex items-center gap-2 text-yellow-500 mb-4">
+            <i data-lucide="star" class="w-5 h-5 fill-current"></i>
+            <span id="mobile-overlay-rating" class="font-bold text-gray-900"></span>
+            <span class="text-black text-sm">Client Rating</span>
+        </div>
+        <h3 id="mobile-overlay-title" class="text-2xl text-black font-bold mb-4"></h3>
+        <p id="mobile-overlay-description" class="text-gray-600 mb-6"></p>
+        <div class="flex items-center gap-3 text-gray-700 mb-6">
+            <i data-lucide="map-pin" class="w-5 h-5 text-blue-600"></i>
+            <span id="mobile-overlay-location"></span>
+        </div>
+        <button class="w-full bg-blue-600 text-white py-3 rounded-xl font-semibold">
+            Request Similar Project
+        </button>
     </div>
 </div>
 
@@ -647,41 +711,118 @@ const projects = [
 }
 ];
 
-/* LIGHTBOX LOGIC */
-const lightbox = document.getElementById('lightbox');
+// MOBILE-FIRST OVERLAY LOGIC
+const mobileOverlay = document.getElementById('mobile-overlay-lightbox');
+const overlayImg = document.getElementById('mobile-overlay-img');
+const overlayCategory = document.getElementById('mobile-overlay-category');
+const overlayTitle = document.getElementById('mobile-overlay-title');
+const overlayDesc = document.getElementById('mobile-overlay-description');
+const overlayLoc = document.getElementById('mobile-overlay-location');
+const overlayRating = document.getElementById('mobile-overlay-rating');
+const overlayPanel = document.getElementById('mobile-overlay-info-panel');
+const overlayImgContainer = document.getElementById('mobile-overlay-img-container');
+const overlayClose = document.getElementById('mobile-overlay-close');
+
+let overlayCurrentIndex = null;
+let panelIsDown = false;
+let imageIsFull = false;
 
 function openLightbox(index) {
     const project = projects[index];
+    overlayCurrentIndex = index;
+    overlayImg.src = project.image;
+    overlayTitle.textContent = project.title;
+    overlayDesc.textContent = project.description;
+    overlayLoc.textContent = project.location;
+    overlayRating.textContent = project.rating;
+    overlayCategory.textContent = project.category;
+    overlayCategory.className = `bg-white px-4 py-1 rounded-full text-sm font-semibold ${project.categoryColor}`;
 
-    document.getElementById('lightbox-img').src = project.image;
-    document.getElementById('lightbox-title').textContent = project.title;
-    document.getElementById('lightbox-description').textContent = project.description;
-    document.getElementById('lightbox-location').textContent = project.location;
-    document.getElementById('lightbox-rating').textContent = project.rating;
+    // Reset panel state
+    overlayPanel.classList.remove('slide-down', 'hide');
+    overlayImgContainer.classList.remove('full');
+    imageIsFull = false;
+    panelIsDown = false;
 
-    const categoryEl = document.getElementById('lightbox-category');
-    categoryEl.textContent = project.category;
-    categoryEl.className =
-        `bg-white px-4 py-1 rounded-full text-sm font-semibold ${project.categoryColor}`;
-
-    lightbox.classList.remove('hidden');
+    mobileOverlay.classList.add('active');
     document.body.style.overflow = 'hidden';
-
     setTimeout(() => lucide.createIcons(), 50);
 }
 
 function closeLightbox() {
-    lightbox.classList.add('hidden');
-    document.body.style.overflow = 'auto';
+    mobileOverlay.classList.remove('active');
+    document.body.style.overflow = '';
 }
 
-document.addEventListener('keydown', e => {
-    if (e.key === 'Escape') closeLightbox();
+// Panel drag up/down for sliding
+let startY = null;
+let startPanelY = null;
+let dragging = false;
+
+overlayPanel.addEventListener('touchstart', function(e) {
+    if (imageIsFull) return;
+    if (e.target.closest('button')) return; // Don't drag if clicking button
+    dragging = true;
+    startY = e.touches[0].clientY;
+    startPanelY = overlayPanel.getBoundingClientRect().top;
+}, {passive: true});
+
+overlayPanel.addEventListener('touchmove', function(e) {
+    if (!dragging || imageIsFull) return;
+    const delta = e.touches[0].clientY - startY;
+    if (delta > 0) {
+        overlayPanel.style.transform = `translateY(${delta}px)`;
+    }
+}, {passive: true});
+
+overlayPanel.addEventListener('touchend', function(e) {
+    if (!dragging || imageIsFull) return;
+    const endY = e.changedTouches[0].clientY;
+    const delta = endY - startY;
+    overlayPanel.style.transform = '';
+    dragging = false;
+    if (delta > 80) {
+        // Slide down
+        overlayPanel.classList.add('slide-down');
+        panelIsDown = true;
+        setTimeout(() => overlayPanel.classList.add('hide'), 350);
+    }
+}, {passive: true});
+
+// Click/tap handle to slide up if panel is down
+overlayPanel.querySelector('.handle').addEventListener('click', function(e) {
+    if (panelIsDown) {
+        overlayPanel.classList.remove('slide-down', 'hide');
+        panelIsDown = false;
+    }
 });
 
-lightbox.addEventListener('click', e => {
-    if (e.target === lightbox) closeLightbox();
+// Tap/Click image to reveal full image (hide info panel)
+overlayImgContainer.addEventListener('click', function() {
+    if (!imageIsFull) {
+        overlayPanel.classList.add('hide');
+        overlayImgContainer.classList.add('full');
+        imageIsFull = true;
+    } else {
+        overlayPanel.classList.remove('hide');
+        overlayImgContainer.classList.remove('full');
+        imageIsFull = false;
+    }
 });
+
+// Close button
+overlayClose.addEventListener('click', closeLightbox);
+
+// ESC to close
+document.addEventListener('keydown', e => {
+    if (mobileOverlay.classList.contains('active') && e.key === 'Escape') closeLightbox();
+});
+
+// Click outside info panel (on overlay background) to close
+mobileOverlay.addEventListener('click', e => {
+    if (e.target === mobileOverlay) closeLightbox();
+});
+
 </script>
 
 </body>
