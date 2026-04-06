@@ -149,8 +149,8 @@
         will-change: transform;
     }
     .mobile-overlay-info-panel.slide-down {
-        /* Slide down to 70% of viewport height */
-        transform: translateY(70vh);
+        /* Slide down to max 50% of viewport height (never fully off-screen) */
+        transform: translateY(50vh);
     }
     .mobile-overlay-info-panel .handle {
         width: 48px;
@@ -158,12 +158,21 @@
         background: #e5e7eb;
         border-radius: 3px;
         margin: 0 auto 1.25rem auto;
-        position: relative;
+        position: absolute;
+        top: 8px;
+        left: 0;
+        right: 0;
         z-index: 2;
+        cursor: pointer;
+        /* Always visible */
+        opacity: 1;
+        pointer-events: auto;
     }
     .mobile-overlay-info-panel .panel-content {
         transition: opacity 0.35s cubic-bezier(.52,1.72,.38,.91);
         opacity: 1;
+        /* Add padding-top to account for the handle */
+        padding-top: 2rem;
     }
     .mobile-overlay-info-panel.slide-down .panel-content {
         opacity: 0;
@@ -772,11 +781,12 @@ function closeLightbox() {
 let startY = null;
 let startPanelY = null;
 let dragging = false;
-const maxSlideDown = window.innerHeight * 0.7; // 70% of viewport height
+const maxSlideDown = () => window.innerHeight * 0.5; // 50% of viewport height
 
 overlayPanel.addEventListener('touchstart', function(e) {
     if (imageIsFull) return;
-    if (e.target.closest('button')) return; // Don't drag if clicking button
+    // Only start drag if handle or panel itself (not button)
+    if (e.target.closest('button')) return;
     dragging = true;
     startY = e.touches[0].clientY;
     startPanelY = overlayPanel.getBoundingClientRect().top;
@@ -786,13 +796,13 @@ overlayPanel.addEventListener('touchmove', function(e) {
     if (!dragging || imageIsFull) return;
     const delta = e.touches[0].clientY - startY;
     if (delta > 0) {
-        // Clamp delta to 70% of viewport height
-        const clampedDelta = Math.min(delta, window.innerHeight * 0.7);
+        // Clamp delta to 50% of viewport height
+        const clampedDelta = Math.min(delta, maxSlideDown());
         overlayPanel.style.transform = `translateY(${clampedDelta}px)`;
         // Fade out panel-content as you drag
         const panelContent = overlayPanel.querySelector('.panel-content');
         if (panelContent) {
-            const fade = 1 - Math.min(clampedDelta / (window.innerHeight * 0.7), 1);
+            const fade = 1 - Math.min(clampedDelta / maxSlideDown(), 1);
             panelContent.style.opacity = fade;
         }
     }
@@ -810,13 +820,13 @@ overlayPanel.addEventListener('touchend', function(e) {
     }
     dragging = false;
     if (delta > 80) {
-        // Slide down (partially, not fully)
+        // Slide down (partially, not fully, to 50vh)
         overlayPanel.classList.add('slide-down');
         panelIsDown = true;
     }
-}, {passive: true});
+});
 
-// Click/tap handle to slide up if panel is down
+// Always keep handle clickable, even when panel is down
 overlayPanel.querySelector('.handle').addEventListener('click', function(e) {
     if (panelIsDown) {
         overlayPanel.classList.remove('slide-down');
