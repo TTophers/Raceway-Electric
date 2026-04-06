@@ -111,17 +111,13 @@
             transform: translateX(0);
         }
         /* Base styles for all screens */
-img.my-picture {
-  width: auto; 
-  max-width: 100%; 
-  height: auto; 
-}
 
-/* Mobile screens only */
-@media screen and (max-width: 480px) {
-  img.my-picture {
-    width: 20px; /* super small */
-    height: auto;
+
+/* Mobile */
+@media screen and (max-width: 767px) {
+  #tiny-img {
+    width: 100px !important; /* super tiny */
+    height: auto !important;
   }
 }
     </style>
@@ -337,7 +333,7 @@ img.my-picture {
     <a href="/about.html" class="block bg-slate-900 border border-slate-700 rounded-2xl p-6 md:p-10 shadow-xl overflow-hidden hover:scale-[1.01] hover:shadow-2xl transition-all duration-300 cursor-pointer">
       
       <!-- Image LEFT -->
-      <img src="pics/favicon.PNG" alt="Electrician at work"
+      <img id="tiny-img" src="pics/favicon.PNG" alt="Electrician at work"
         class="w-40 sm:w-48 md:w-64 float-left mr-4 sm:mr-6 mb-4 rounded-xl border border-slate-600 object-cover">
 
       <!-- Text -->
