@@ -58,6 +58,16 @@
     </script>
     
 <style>
+    /* Responsive font sizes for project-card headings and paragraphs on mobile */
+    @media (max-width: 767px) {
+        .project-card h3 {
+            font-size: 1rem; /* Tailwind text-base */
+            margin-bottom: 0.5rem;
+        }
+        .project-card p {
+            font-size: 0.8rem; /* Slightly smaller than text-sm */
+        }
+    }
     .reveal {
         opacity: 0;
         transform: translateY(30px);
