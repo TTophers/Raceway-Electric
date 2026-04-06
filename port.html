@@ -115,7 +115,7 @@
     .electric-accent:hover::after {
         transform: translateX(0);
     }
-    /* --- New Mobile-First Overlay Lightbox --- */
+    /* --- Responsive Overlay Lightbox (Image left, Info right on desktop) --- */
     .mobile-overlay-lightbox {
         position: fixed;
         inset: 0;
@@ -130,22 +130,32 @@
     .mobile-overlay-lightbox.active {
         display: flex;
     }
+    .mobile-overlay-lightbox-inner {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        height: 100%;
+        position: relative;
+    }
     .mobile-overlay-img-container {
-        position: absolute;
-        top: 0; left: 0; right: 0; bottom: 0;
-        z-index: 10;
+        width: 100%;
+        background: #000;
         display: flex;
         justify-content: center;
         align-items: center;
+        position: relative;
+        z-index: 10;
         overflow: hidden;
-        transition: filter 0.4s;
         cursor: pointer;
-        background: #000;
+        transition: filter 0.4s;
+        min-height: 40vw;
+        max-height: 55vh;
+        flex-shrink: 0;
     }
     .mobile-overlay-img-container img {
         width: 100%;
         height: auto;
-        max-height: 100vh;
+        max-height: 55vh;
         object-fit: contain;
         transition: filter 0.4s;
         pointer-events: none;
@@ -160,16 +170,18 @@
         padding: 2rem 1.25rem 2.5rem 1.25rem;
         min-height: 40vh;
         box-shadow: 0 -8px 32px 0 rgba(0,0,0,0.15);
-        max-width: 600px;
+        max-width: 100vw;
         margin-left: auto;
         margin-right: auto;
         transform: translateY(0);
         transition: transform 0.35s cubic-bezier(.52,1.72,.38,.91);
         touch-action: pan-y;
         will-change: transform;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
     }
     .mobile-overlay-info-panel.slide-down {
-        /* Slide down to max 50% of viewport height (never fully off-screen) */
         transform: translateY(50vh);
     }
     .mobile-overlay-info-panel .handle {
@@ -184,14 +196,12 @@
         right: 0;
         z-index: 2;
         cursor: pointer;
-        /* Always visible */
         opacity: 1;
         pointer-events: auto;
     }
     .mobile-overlay-info-panel .panel-content {
         transition: opacity 0.35s cubic-bezier(.52,1.72,.38,.91);
         opacity: 1;
-        /* Add padding-top to account for the handle */
         padding-top: 2rem;
     }
     .mobile-overlay-info-panel.slide-down .panel-content {
@@ -224,15 +234,50 @@
         display: none;
     }
     @media (min-width: 768px) {
-        .mobile-overlay-info-panel {
-            border-radius: 2rem;
-            min-height: 0;
-            max-width: 700px;
-            padding: 2.5rem 2.5rem 3rem 2.5rem;
+        .mobile-overlay-lightbox {
+            align-items: center;
+            justify-content: center;
+        }
+        .mobile-overlay-lightbox-inner {
+            flex-direction: row;
+            width: 90vw;
+            max-width: 1000px;
+            max-height: 90vh;
+            min-height: 400px;
+            background: transparent;
+            box-shadow: 0 8px 40px 0 rgba(0,0,0,0.32);
+        }
+        .mobile-overlay-img-container {
+            width: 54%;
+            min-width: 0;
+            max-width: 56vw;
+            max-height: 90vh;
+            border-top-left-radius: 2rem;
+            border-bottom-left-radius: 2rem;
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+            min-height: 400px;
         }
         .mobile-overlay-img-container img {
-            max-width: 90vw;
-            max-height: 75vh;
+            width: 100%;
+            max-width: 100%;
+            max-height: 85vh;
+        }
+        .mobile-overlay-info-panel {
+            border-radius: 0 2rem 2rem 0;
+            min-height: 0;
+            max-width: 46vw;
+            width: 46vw;
+            padding: 2.5rem 2.5rem 3rem 2.5rem;
+            box-shadow: none;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+        }
+        .mobile-overlay-info-panel .handle {
+            display: none;
         }
     }
 </style>
@@ -618,37 +663,39 @@
 
 </div>
 
-<!-- NEW MOBILE-FIRST OVERLAY LIGHTBOX -->
+<!-- RESPONSIVE OVERLAY LIGHTBOX -->
 <div id="mobile-overlay-lightbox" class="mobile-overlay-lightbox">
+  <div class="mobile-overlay-lightbox-inner">
     <div class="mobile-overlay-img-container" id="mobile-overlay-img-container">
-        <img id="mobile-overlay-img" src="" alt="Project Image" draggable="false" />
-        <div class="absolute top-4 left-4 z-30">
-            <span id="mobile-overlay-category"
-                  class="bg-white px-4 py-1 rounded-full text-sm font-semibold"></span>
+      <img id="mobile-overlay-img" src="" alt="Project Image" draggable="false" />
+      <div class="absolute top-4 left-4 z-30">
+        <span id="mobile-overlay-category"
+              class="bg-white px-4 py-1 rounded-full text-sm font-semibold"></span>
+      </div>
+    </div>
+    <div class="mobile-overlay-info-panel" id="mobile-overlay-info-panel">
+      <div class="handle"></div>
+      <div class="panel-content">
+        <div class="flex items-center gap-2 text-yellow-500 mb-4">
+          <i data-lucide="star" class="w-5 h-5 fill-current"></i>
+          <span id="mobile-overlay-rating" class="font-bold text-gray-900"></span>
+          <span class="text-black text-sm">Client Rating</span>
         </div>
+        <h3 id="mobile-overlay-title" class="text-2xl text-black font-bold mb-4"></h3>
+        <p id="mobile-overlay-description" class="text-gray-600 mb-6"></p>
+        <div class="flex items-center gap-3 text-gray-700 mb-6">
+          <i data-lucide="map-pin" class="w-5 h-5 text-blue-600"></i>
+          <span id="mobile-overlay-location"></span>
+        </div>
+        <button class="w-full bg-blue-600 text-white py-3 rounded-xl font-semibold">
+          Request Similar Project
+        </button>
+      </div>
     </div>
     <button class="mobile-overlay-close" id="mobile-overlay-close" aria-label="Close">
-        <i data-lucide="x" class="w-8 h-8"></i>
+      <i data-lucide="x" class="w-8 h-8"></i>
     </button>
-    <div class="mobile-overlay-info-panel" id="mobile-overlay-info-panel">
-        <div class="handle"></div>
-        <div class="panel-content">
-            <div class="flex items-center gap-2 text-yellow-500 mb-4">
-                <i data-lucide="star" class="w-5 h-5 fill-current"></i>
-                <span id="mobile-overlay-rating" class="font-bold text-gray-900"></span>
-                <span class="text-black text-sm">Client Rating</span>
-            </div>
-            <h3 id="mobile-overlay-title" class="text-2xl text-black font-bold mb-4"></h3>
-            <p id="mobile-overlay-description" class="text-gray-600 mb-6"></p>
-            <div class="flex items-center gap-3 text-gray-700 mb-6">
-                <i data-lucide="map-pin" class="w-5 h-5 text-blue-600"></i>
-                <span id="mobile-overlay-location"></span>
-            </div>
-            <button class="w-full bg-blue-600 text-white py-3 rounded-xl font-semibold">
-                Request Similar Project
-            </button>
-        </div>
-    </div>
+  </div>
 </div>
 
 
@@ -754,7 +801,7 @@ const projects = [
     categoryColor: "text-blue-600",
     location: "Denver, CO",
     rating: "5.0",
-    image: "/portpics/p4.JPG",
+    image: "/portpics/p5.JPG",
     description:
     "Installed a high-speed EV charging station with dedicated circuit and safety compliance."
 },
@@ -764,7 +811,7 @@ const projects = [
     categoryColor: "text-blue-600",
     location: "Denver, CO",
     rating: "5.0",
-    image: "/portpics/p4.JPG",
+    image: "/portpics/pe1.JPG",
     description:
     "Installed a high-speed EV charging station with dedicated circuit and safety compliance."
 },
@@ -774,7 +821,7 @@ const projects = [
     categoryColor: "text-blue-600",
     location: "Denver, CO",
     rating: "5.0",
-    image: "/portpics/p4.JPG",
+    image: "/portpics/pe2.JPG",
     description:
     "Installed a high-speed EV charging station with dedicated circuit and safety compliance."
 },
@@ -784,7 +831,7 @@ const projects = [
     categoryColor: "text-blue-600",
     location: "Denver, CO",
     rating: "5.0",
-    image: "/portpics/p4.JPG",
+    image: "/portpics/pg1.jpeg",
     description:
     "Installed a high-speed EV charging station with dedicated circuit and safety compliance."
 },
@@ -794,7 +841,7 @@ const projects = [
     categoryColor: "text-blue-600",
     location: "Denver, CO",
     rating: "5.0",
-    image: "/portpics/p4.JPG",
+    image: "/portpics/pg2.jpeg",
     description:
     "Installed a high-speed EV charging station with dedicated circuit and safety compliance."
 },
@@ -804,7 +851,7 @@ const projects = [
     categoryColor: "text-blue-600",
     location: "Denver, CO",
     rating: "5.0",
-    image: "/portpics/p4.JPG",
+    image: "/portpics/pg2.jpeg",
     description:
     "Installed a high-speed EV charging station with dedicated circuit and safety compliance."
 },
@@ -814,7 +861,7 @@ const projects = [
     categoryColor: "text-blue-600",
     location: "Denver, CO",
     rating: "5.0",
-    image: "/portpics/p4.JPG",
+    image: "/portpics/pg3.jpeg",
     description:
     "Installed a high-speed EV charging station with dedicated circuit and safety compliance."
 },
@@ -824,7 +871,7 @@ const projects = [
     categoryColor: "text-blue-600",
     location: "Denver, CO",
     rating: "5.0",
-    image: "/portpics/p4.JPG",
+    image: "/portpics/pg4.JPG",
     description:
     "Installed a high-speed EV charging station with dedicated circuit and safety compliance."
 },
@@ -834,7 +881,7 @@ const projects = [
     categoryColor: "text-blue-600",
     location: "Denver, CO",
     rating: "5.0",
-    image: "/portpics/p4.JPG",
+    image: "/portpics/ph1.JPG",
     description:
     "Installed a high-speed EV charging station with dedicated circuit and safety compliance."
 },
@@ -844,7 +891,17 @@ const projects = [
     categoryColor: "text-blue-600",
     location: "Denver, CO",
     rating: "5.0",
-    image: "/portpics/p4.JPG",
+    image: "/portpics/ph2.jpeg",
+    description:
+    "Installed a high-speed EV charging station with dedicated circuit and safety compliance."
+},
+{
+    title: "EV Charger Installation",
+    category: "Residential",
+    categoryColor: "text-blue-600",
+    location: "Denver, CO",
+    rating: "5.0",
+    image: "/portpics/pht2.jpeg",
     description:
     "Installed a high-speed EV charging station with dedicated circuit and safety compliance."
 },
@@ -854,20 +911,11 @@ const projects = [
     categoryColor: "text-blue-600",
     location: "Denver, CO",
     rating: "2.0",
-    image: "/portpics/p4.JPG",
+    image: "/portpics/pht1.jpeg",
     description:
     "Installed a high-speed EV charging station with dedicated circuit and safety compliance."
 },
-{
-    title: "EV Charger Installation",
-    category: "Residential",
-    categoryColor: "text-blue-600",
-    location: "Denver, CO",
-    rating: "5.0",
-    image: "/portpics/p4.JPG",
-    description:
-    "Installed a high-speed EV charging station with dedicated circuit and safety compliance."
-}
+
 
 ];
 
