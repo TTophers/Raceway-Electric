@@ -115,17 +115,15 @@
     .electric-accent:hover::after {
         transform: translateX(0);
     }
-    /* --- Responsive Overlay Lightbox (Image left, Info right on desktop) --- */
+    /* --- Stripped-down Stable Lightbox --- */
     .mobile-overlay-lightbox {
         position: fixed;
         inset: 0;
         z-index: 50;
         background: rgba(0,0,0,0.97);
         display: none;
-        flex-direction: column;
-        justify-content: flex-end;
-        align-items: stretch;
-        transition: background 0.4s;
+        align-items: center;
+        justify-content: center;
     }
     .mobile-overlay-lightbox.active {
         display: flex;
@@ -133,9 +131,13 @@
     .mobile-overlay-lightbox-inner {
         display: flex;
         flex-direction: column;
+        background: #fff;
+        border-radius: 1.5rem;
+        max-width: 95vw;
+        max-height: 95vh;
         width: 100%;
-        height: 100%;
-        position: relative;
+        box-shadow: 0 8px 40px 0 rgba(0,0,0,0.32);
+        overflow: hidden;
     }
     .mobile-overlay-img-container {
         width: 100%;
@@ -143,11 +145,6 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        position: relative;
-        z-index: 10;
-        overflow: hidden;
-        cursor: pointer;
-        transition: filter 0.4s;
         min-height: 40vw;
         max-height: 55vh;
         flex-shrink: 0;
@@ -157,56 +154,18 @@
         height: auto;
         max-height: 55vh;
         object-fit: contain;
-        transition: filter 0.4s;
-        pointer-events: none;
         user-select: none;
+        pointer-events: none;
     }
     .mobile-overlay-info-panel {
-        position: relative;
-        z-index: 20;
         background: #fff;
-        border-top-left-radius: 1.25rem;
-        border-top-right-radius: 1.25rem;
         padding: 2rem 1.25rem 2.5rem 1.25rem;
         min-height: 40vh;
-        box-shadow: 0 -8px 32px 0 rgba(0,0,0,0.15);
-        max-width: 100vw;
-        margin-left: auto;
-        margin-right: auto;
-        transform: translateY(0);
-        transition: transform 0.35s cubic-bezier(.52,1.72,.38,.91);
-        touch-action: pan-y;
-        will-change: transform;
+        width: 100%;
+        box-sizing: border-box;
         display: flex;
         flex-direction: column;
         justify-content: flex-start;
-    }
-    .mobile-overlay-info-panel.slide-down {
-        transform: translateY(50vh);
-    }
-    .mobile-overlay-info-panel .handle {
-        width: 48px;
-        height: 6px;
-        background: #e5e7eb;
-        border-radius: 3px;
-        margin: 0 auto 1.25rem auto;
-        position: absolute;
-        top: 8px;
-        left: 0;
-        right: 0;
-        z-index: 2;
-        cursor: pointer;
-        opacity: 1;
-        pointer-events: auto;
-    }
-    .mobile-overlay-info-panel .panel-content {
-        transition: opacity 0.35s cubic-bezier(.52,1.72,.38,.91);
-        opacity: 1;
-        padding-top: 2rem;
-    }
-    .mobile-overlay-info-panel.slide-down .panel-content {
-        opacity: 0;
-        pointer-events: none;
     }
     .mobile-overlay-close {
         position: absolute;
@@ -225,37 +184,18 @@
     .mobile-overlay-close:hover {
         background: rgba(0,0,0,0.9);
     }
-    .mobile-overlay-img-container.full {
-        z-index: 99;
-        background: #000;
-        cursor: zoom-out;
-    }
-    .mobile-overlay-info-panel.hide {
-        display: none;
-    }
     @media (min-width: 768px) {
-        .mobile-overlay-lightbox {
-            align-items: center;
-            justify-content: center;
-        }
         .mobile-overlay-lightbox-inner {
             flex-direction: row;
             width: 90vw;
             max-width: 1000px;
             max-height: 90vh;
             min-height: 400px;
-            background: transparent;
-            box-shadow: 0 8px 40px 0 rgba(0,0,0,0.32);
         }
         .mobile-overlay-img-container {
             width: 54%;
-            min-width: 0;
             max-width: 56vw;
             max-height: 90vh;
-            border-top-left-radius: 2rem;
-            border-bottom-left-radius: 2rem;
-            border-top-right-radius: 0;
-            border-bottom-right-radius: 0;
             min-height: 400px;
         }
         .mobile-overlay-img-container img {
@@ -264,20 +204,15 @@
             max-height: 85vh;
         }
         .mobile-overlay-info-panel {
-            border-radius: 0 2rem 2rem 0;
             min-height: 0;
             max-width: 46vw;
             width: 46vw;
             padding: 2.5rem 2.5rem 3rem 2.5rem;
-            box-shadow: none;
             margin: 0;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: flex-start;
-        }
-        .mobile-overlay-info-panel .handle {
-            display: none;
         }
     }
 </style>
@@ -663,9 +598,9 @@
 
 </div>
 
-<!-- RESPONSIVE OVERLAY LIGHTBOX -->
+<!-- RESPONSIVE OVERLAY LIGHTBOX (Stripped-down stable version) -->
 <div id="mobile-overlay-lightbox" class="mobile-overlay-lightbox">
-  <div class="mobile-overlay-lightbox-inner">
+  <div class="mobile-overlay-lightbox-inner" style="position:relative;">
     <div class="mobile-overlay-img-container" id="mobile-overlay-img-container">
       <img id="mobile-overlay-img" src="" alt="Project Image" draggable="false" />
       <div class="absolute top-4 left-4 z-30">
@@ -674,23 +609,20 @@
       </div>
     </div>
     <div class="mobile-overlay-info-panel" id="mobile-overlay-info-panel">
-      <div class="handle"></div>
-      <div class="panel-content">
-        <div class="flex items-center gap-2 text-yellow-500 mb-4">
-          <i data-lucide="star" class="w-5 h-5 fill-current"></i>
-          <span id="mobile-overlay-rating" class="font-bold text-gray-900"></span>
-          <span class="text-black text-sm">Client Rating</span>
-        </div>
-        <h3 id="mobile-overlay-title" class="text-2xl text-black font-bold mb-4"></h3>
-        <p id="mobile-overlay-description" class="text-gray-600 mb-6"></p>
-        <div class="flex items-center gap-3 text-gray-700 mb-6">
-          <i data-lucide="map-pin" class="w-5 h-5 text-blue-600"></i>
-          <span id="mobile-overlay-location"></span>
-        </div>
-        <button class="w-full bg-blue-600 text-white py-3 rounded-xl font-semibold">
-          Request Similar Project
-        </button>
+      <div class="flex items-center gap-2 text-yellow-500 mb-4">
+        <i data-lucide="star" class="w-5 h-5 fill-current"></i>
+        <span id="mobile-overlay-rating" class="font-bold text-gray-900"></span>
+        <span class="text-black text-sm">Client Rating</span>
       </div>
+      <h3 id="mobile-overlay-title" class="text-2xl text-black font-bold mb-4"></h3>
+      <p id="mobile-overlay-description" class="text-gray-600 mb-6"></p>
+      <div class="flex items-center gap-3 text-gray-700 mb-6">
+        <i data-lucide="map-pin" class="w-5 h-5 text-blue-600"></i>
+        <span id="mobile-overlay-location"></span>
+      </div>
+      <button class="w-full bg-blue-600 text-white py-3 rounded-xl font-semibold">
+        Request Similar Project
+      </button>
     </div>
     <button class="mobile-overlay-close" id="mobile-overlay-close" aria-label="Close">
       <i data-lucide="x" class="w-8 h-8"></i>
@@ -919,7 +851,7 @@ const projects = [
 
 ];
 
-// MOBILE-FIRST OVERLAY LOGIC
+// STABLE LIGHTBOX LOGIC (stripped down, no touch/drag/fancy logic)
 const mobileOverlay = document.getElementById('mobile-overlay-lightbox');
 const overlayImg = document.getElementById('mobile-overlay-img');
 const overlayCategory = document.getElementById('mobile-overlay-category');
@@ -931,13 +863,8 @@ const overlayPanel = document.getElementById('mobile-overlay-info-panel');
 const overlayImgContainer = document.getElementById('mobile-overlay-img-container');
 const overlayClose = document.getElementById('mobile-overlay-close');
 
-let overlayCurrentIndex = null;
-let panelIsDown = false;
-let imageIsFull = false;
-
 function openLightbox(index) {
     const project = projects[index];
-    overlayCurrentIndex = index;
     overlayImg.src = project.image;
     overlayTitle.textContent = project.title;
     overlayDesc.textContent = project.description;
@@ -945,13 +872,6 @@ function openLightbox(index) {
     overlayRating.textContent = project.rating;
     overlayCategory.textContent = project.category;
     overlayCategory.className = `bg-white px-4 py-1 rounded-full text-sm font-semibold ${project.categoryColor}`;
-
-    // Reset panel state
-    overlayPanel.classList.remove('slide-down', 'hide');
-    overlayImgContainer.classList.remove('full');
-    imageIsFull = false;
-    panelIsDown = false;
-
     mobileOverlay.classList.add('active');
     document.body.style.overflow = 'hidden';
     setTimeout(() => lucide.createIcons(), 50);
@@ -962,108 +882,10 @@ function closeLightbox() {
     document.body.style.overflow = '';
 }
 
-// Panel drag up/down for sliding
-let startY = null;
-let startPanelTranslateY = 0;
-let dragging = false;
-const maxSlideDown = () => window.innerHeight * 0.5; // 50% of viewport height
-
-overlayPanel.addEventListener('touchstart', function(e) {
-    if (imageIsFull) return;
-    // Only start drag if handle or panel itself (not button)
-    if (e.target.closest('button')) return;
-    dragging = true;
-    startY = e.touches[0].clientY;
-    // Determine current translateY of the panel
-    const computedStyle = window.getComputedStyle(overlayPanel);
-    const matrix = computedStyle.transform;
-    let currentTranslateY = 0;
-    if (matrix && matrix !== 'none') {
-        const values = matrix.match(/matrix.*\((.+)\)/)[1].split(', ');
-        // 5th value is translateY for 2d matrix
-        currentTranslateY = parseFloat(values[5]);
-        if (isNaN(currentTranslateY)) currentTranslateY = 0;
-    }
-    // If panel is down, start at 50vh
-    if (overlayPanel.classList.contains('slide-down')) {
-        currentTranslateY = maxSlideDown();
-    }
-    startPanelTranslateY = currentTranslateY;
-}, {passive: true});
-
-overlayPanel.addEventListener('touchmove', function(e) {
-    if (!dragging || imageIsFull) return;
-    const delta = e.touches[0].clientY - startY;
-    // Allow dragging both up and down, clamp between 0 and maxSlideDown()
-    let newTranslateY = startPanelTranslateY + delta;
-    newTranslateY = Math.max(0, Math.min(newTranslateY, maxSlideDown()));
-    overlayPanel.style.transform = `translateY(${newTranslateY}px)`;
-    // Fade out panel-content as you drag down, fade in as you drag up
-    const panelContent = overlayPanel.querySelector('.panel-content');
-    if (panelContent) {
-        const fade = 1 - Math.min(newTranslateY / maxSlideDown(), 1);
-        panelContent.style.opacity = fade;
-    }
-}, {passive: true});
-
-overlayPanel.addEventListener('touchend', function(e) {
-    if (!dragging || imageIsFull) return;
-    // Calculate where the panel ended up
-    const endY = e.changedTouches[0].clientY;
-    const delta = endY - startY;
-    // Compute final translateY
-    let finalTranslateY = startPanelTranslateY + delta;
-    finalTranslateY = Math.max(0, Math.min(finalTranslateY, maxSlideDown()));
-    overlayPanel.style.transform = '';
-    // Restore panel-content opacity
-    const panelContent = overlayPanel.querySelector('.panel-content');
-    if (panelContent) {
-        panelContent.style.opacity = '';
-    }
-    dragging = false;
-    // Threshold for snapping up or down: 25% of maxSlideDown
-    const threshold = maxSlideDown() * 0.25;
-    if (finalTranslateY > threshold) {
-        // Slide down (partially, not fully, to 50vh)
-        overlayPanel.classList.add('slide-down');
-        panelIsDown = true;
-    } else {
-        // Snap back up
-        overlayPanel.classList.remove('slide-down');
-        panelIsDown = false;
-    }
-});
-
-// Always keep handle clickable, even when panel is down
-overlayPanel.querySelector('.handle').addEventListener('click', function(e) {
-    if (panelIsDown) {
-        overlayPanel.classList.remove('slide-down');
-        panelIsDown = false;
-    }
-});
-
-// Tap/Click image to reveal full image (hide info panel)
-overlayImgContainer.addEventListener('click', function() {
-    if (!imageIsFull) {
-        overlayPanel.classList.add('hide');
-        overlayImgContainer.classList.add('full');
-        imageIsFull = true;
-    } else {
-        overlayPanel.classList.remove('hide');
-        overlayImgContainer.classList.remove('full');
-        imageIsFull = false;
-    }
-});
-
-// Close button
 overlayClose.addEventListener('click', closeLightbox);
-
-// ESC to close
 document.addEventListener('keydown', e => {
     if (mobileOverlay.classList.contains('active') && e.key === 'Escape') closeLightbox();
 });
-
-// Click outside info panel (on overlay background) to close
 mobileOverlay.addEventListener('click', e => {
     if (e.target === mobileOverlay) closeLightbox();
 });
